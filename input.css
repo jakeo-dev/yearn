@@ -4,22 +4,30 @@
 
 @layer components {
   .item {
-    @apply text-xl hover:line-through decoration-slate-500 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-3;
+    @apply text-xl /* hover:line-through decoration-slate-500 */ rounded-md hover:bg-slate-300 transition-all cursor-pointer p-3;
   }
 
   .done {
-    @apply line-through decoration-slate-700 decoration-[3px];
+    @apply line-through decoration-slate-600 decoration-[2.5px];
   }
 
   .opt {
     @apply float-right;
   }
 
-  .fa-trash {
-    @apply hover:text-red-600 transition-all;
+  .price {
+    @apply text-base text-green-600 ml-3;
   }
 
   .fa-link {
-    @apply hover:text-blue-600 transition-all mr-2;
+    @apply hover:text-blue-600 transition-all mr-3;
+  }
+
+  .fa-dollar-sign {
+    @apply hover:text-green-600 transition-all mr-3;
+  }
+
+  .fa-trash {
+    @apply hover:text-red-600 transition-all;
   }
 }

@@ -21,6 +21,11 @@ function add() {
 
     div.appendChild(icon);
 
+    var icon = document.createElement('i');
+    icon.className = 'fa-solid fa-dollar-sign';
+
+    div.appendChild(icon);
+
     icon = document.createElement('i');
     icon.className = 'fa-solid fa-trash';
 
@@ -28,15 +33,21 @@ function add() {
 
     nodeList[i].appendChild(div);
 
-    for (i = 0; i < trash.length; i++) {
-        trash[i].onclick = function () {
-            clickTrash(this);
-        }
-    }
-
     for (i = 0; i < link.length; i++) {
         link[i].onclick = function () {
             clickLink(this);
+        }
+    }
+
+    for (i = 0; i < tag.length; i++) {
+        tag[i].onclick = function () {
+            clickTag(this);
+        }
+    }
+
+    for (i = 0; i < trash.length; i++) {
+        trash[i].onclick = function () {
+            clickTrash(this);
         }
     }
 }
@@ -52,6 +63,11 @@ for (i = 0; i < nodeList.length; i++) {
 
     div.appendChild(icon);
 
+    var icon = document.createElement('i');
+    icon.className = 'fa-solid fa-dollar-sign';
+
+    div.appendChild(icon);
+
     icon = document.createElement('i');
     icon.className = 'fa-solid fa-trash';
 
@@ -60,17 +76,24 @@ for (i = 0; i < nodeList.length; i++) {
     nodeList[i].appendChild(div);
 }
 
-var trash = document.getElementsByClassName('fa-trash');
-for (i = 0; i < trash.length; i++) {
-    trash[i].onclick = function () {
-        clickTrash(this);
-    }
-}
-
 var link = document.getElementsByClassName('fa-link');
 for (i = 0; i < link.length; i++) {
     link[i].onclick = function () {
         clickLink(this);
+    }
+}
+
+var tag = document.getElementsByClassName('fa-dollar-sign');
+for (i = 0; i < tag.length; i++) {
+    tag[i].onclick = function () {
+        clickTag(this);
+    }
+}
+
+var trash = document.getElementsByClassName('fa-trash');
+for (i = 0; i < trash.length; i++) {
+    trash[i].onclick = function () {
+        clickTrash(this);
     }
 }
 
@@ -91,15 +114,42 @@ function clickTrash(el) {
     el.parentElement.parentElement.style.display = 'none';
 }
 
+function clickTag(el) {
+    entered = prompt('Enter the price of your desired gift');
+
+    if (entered == null || entered == '') {
+        return;
+    } else if (isNaN(entered)) {
+        alert('Enter a valid number');
+    } else if (entered <= 0) {
+        alert('Enter a higher price');
+    } else if (entered > 999999999) {
+        alert('Enter a lower price');
+    } else {
+        if (el.parentElement.parentElement.getElementsByClassName('price')[0]) {
+            el.parentElement.parentElement.getElementsByClassName('price')[0].remove();
+        }
+
+        el.tag = (Math.round(entered * 100)) / 100;
+
+        var span = document.createElement('span');
+        var p = document.createTextNode('$' + el.tag);
+        span.appendChild(p);
+        span.className = 'price';
+        el.parentElement.parentElement.appendChild(span);
+    }
+}
+
 function clickLink(el) {
     if (el.link == null) {
         entered = prompt('Enter the link to your desired gift');
 
         var valid = validURL(entered);
 
-        if (entered == null || entered == '' || valid == false) {
+        if (entered == null || entered == '') {
+            return;
+        } else if (valid == false) {
             alert('Enter a valid URL');
-            return
         } else {
             el.link = entered;
         }
