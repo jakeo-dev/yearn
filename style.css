@@ -519,6 +519,7 @@ video {
   padding: 0.75rem;
   font-size: 1.25rem;
   line-height: 1.75rem;
+  text-decoration-color: #64748b;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -527,6 +528,7 @@ video {
 .item:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+  text-decoration-line: line-through;
 }
 
 .done {
@@ -658,14 +660,14 @@ video {
   line-height: 1.75rem;
 }
 
-.text-slate-200 {
-  --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
-}
-
 .text-slate-900 {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
+}
+
+.text-slate-200 {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
 .outline-none {
