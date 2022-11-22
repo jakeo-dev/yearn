@@ -1,59 +1,69 @@
-function add() {
-    var li = document.createElement('li');
-    var inputValue = document.getElementById('input').value;
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-    li.classList.add('item'); // adds the 'item' class to the new element
+document.getElementById('list').innerHTML = localStorage.getItem('whimlist');
 
-    if (inputValue === '') {
+function add() {
+    if (document.getElementById('input').value === '') {
         alert('Enter an item');
     } else {
+        var li = document.createElement('li');
+        li.name = document.getElementById('input').value;
+        var t = document.createTextNode(document.getElementById('input').value);
+        li.appendChild(t);
+        li.classList.add('item'); // adds the 'item' class to the new element
         document.getElementById('list').appendChild(li);
-    }
 
-    document.getElementById('input').value = '';
+        document.getElementById('input').value = '';
 
-    var div = document.createElement('div');
-    div.className = 'opt';
+        var div = document.createElement('div');
+        div.className = 'opt';
 
-    var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-link';
+        var icon = document.createElement('i');
+        icon.className = 'fa-solid fa-link';
 
-    div.appendChild(icon);
+        div.appendChild(icon);
 
-    var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-dollar-sign';
+        var icon = document.createElement('i');
+        icon.className = 'fa-solid fa-dollar-sign';
 
-    div.appendChild(icon);
+        div.appendChild(icon);
 
-    icon = document.createElement('i');
-    icon.className = 'fa-solid fa-trash';
+        icon = document.createElement('i');
+        icon.className = 'fa-solid fa-trash';
 
-    div.appendChild(icon);
+        div.appendChild(icon);
 
-    nodeList[i].appendChild(div);
+        li.appendChild(div);
 
-    for (i = 0; i < link.length; i++) {
-        link[i].onclick = function () {
-            clickLink(this);
+        localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
+        console.log(localStorage.getItem('whimlist'));
+
+        //localStorage.setItem(li.name + 'Name', li.name);
+        //console.log(localStorage.getItem(li.name + 'Name'));
+
+        for (i = 0; i < link.length; i++) {
+            link[i].onclick = function () {
+                clickLink(this);
+            }
         }
-    }
 
-    for (i = 0; i < tag.length; i++) {
-        tag[i].onclick = function () {
-            clickTag(this);
+        for (i = 0; i < tag.length; i++) {
+            tag[i].onclick = function () {
+                clickTag(this);
+            }
         }
-    }
 
-    for (i = 0; i < trash.length; i++) {
-        trash[i].onclick = function () {
-            clickTrash(this);
+        for (i = 0; i < trash.length; i++) {
+            trash[i].onclick = function () {
+                clickTrash(this);
+            }
         }
     }
 }
 
 // appends trash and link button to each list item
-var nodeList = document.getElementsByClassName('item');
+
+
+//I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
+/* var nodeList = document.getElementsByClassName('item');
 for (i = 0; i < nodeList.length; i++) {
     var div = document.createElement('div');
     div.className = 'opt';
@@ -74,26 +84,26 @@ for (i = 0; i < nodeList.length; i++) {
     div.appendChild(icon);
 
     nodeList[i].appendChild(div);
-}
+} */
 
 var link = document.getElementsByClassName('fa-link');
 for (i = 0; i < link.length; i++) {
     link[i].onclick = function () {
-        clickLink(this);
+        clickLink(this.parentElement.parentElement);
     }
 }
 
 var tag = document.getElementsByClassName('fa-dollar-sign');
 for (i = 0; i < tag.length; i++) {
     tag[i].onclick = function () {
-        clickTag(this);
+        clickTag(this.parentElement.parentElement);
     }
 }
 
 var trash = document.getElementsByClassName('fa-trash');
 for (i = 0; i < trash.length; i++) {
     trash[i].onclick = function () {
-        clickTrash(this);
+        clickTrash(this.parentElement.parentElement);
     }
 }
 
@@ -111,7 +121,10 @@ document.body.onkeyup = function (event) {
 }
 
 function clickTrash(el) {
-    el.parentElement.parentElement.style.display = 'none';
+    el.remove();
+
+    localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
+    console.log(localStorage.getItem('whimlist'));
 }
 
 function clickTag(el) {
@@ -126,8 +139,9 @@ function clickTag(el) {
     } else if (entered > 999999999) {
         alert('Enter a lower price');
     } else {
-        if (el.parentElement.parentElement.getElementsByClassName('price')[0]) {
-            el.parentElement.parentElement.getElementsByClassName('price')[0].remove();
+
+        if (el.getElementsByClassName('price')[0]) {
+            el.getElementsByClassName('price')[0].remove();
         }
 
         el.tag = (Math.round(entered * 100)) / 100;
@@ -136,11 +150,13 @@ function clickTag(el) {
         var p = document.createTextNode('$' + el.tag);
         span.appendChild(p);
         span.className = 'price';
-        el.parentElement.parentElement.appendChild(span);
+        el.appendChild(span);
     }
 }
 
 function clickLink(el) {
+    el.link = localStorage.getItem(el.innerHTML.link + 'Link');
+
     if (el.link == null) {
         entered = prompt('Enter the link to your desired gift');
 
@@ -152,6 +168,8 @@ function clickLink(el) {
             alert('Enter a valid URL');
         } else {
             el.link = entered;
+
+            localStorage.setItem(el.innerHTML.link + 'Link', el.link);
         }
     } else {
         if (el.link.startsWith('http')) {
