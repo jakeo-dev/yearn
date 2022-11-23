@@ -33,7 +33,7 @@ function updateList() {
 
 function add() {
     if (document.getElementById('input').value === '') {
-        alert('Enter an item');
+        alert('Enter a gift you desire');
     } else {
         var el = document.createElement('li');
         el.name = document.getElementById('input').value;
