@@ -1,5 +1,5 @@
-console.log('v1.0.1');
-console.log('whats new: \n • Fixed a renaming issue');
+console.log('v1.0.2');
+console.log('whats new: \n • Accessibility improvements');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
@@ -46,21 +46,29 @@ function add() {
 
         var icon = document.createElement('i');
         icon.className = 'fa-solid fa-link';
+        icon.ariaLabel = 'Add link to gift';
+        icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
         icon.className = 'fa-solid fa-dollar-sign';
+        icon.ariaLabel = 'Add price of gift';
+        icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
         icon.className = 'fa-solid fa-pen';
+        icon.ariaLabel = 'Edit gift name';
+        icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
         icon.className = 'fa-solid fa-trash';
+        icon.ariaLabel = 'Remove gift';
+        icon.title = 'Remove gift';
 
         div.appendChild(icon);
 

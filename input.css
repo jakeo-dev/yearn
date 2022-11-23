@@ -32,7 +32,7 @@
   }
 
   .fa-pen {
-    @apply hover:text-yellow-600 transition-all;
+    @apply hover:text-slate-500 transition-all;
   }
 
   .fa-trash {
