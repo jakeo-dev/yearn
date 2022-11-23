@@ -1,5 +1,5 @@
-console.log('v1.0.3');
-console.log('whats new: \n • Ability to add attributes of the gift that appear next to the gift name');
+console.log('v1.0.4');
+console.log('whats new: \n • Design improvements');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
@@ -73,8 +73,8 @@ function add() {
 
         var icon = document.createElement('i');
         icon.className = 'fa-solid fa-tag ml-3';
-        icon.ariaLabel = 'Add a gift attribute';
-        icon.title = 'Add a gift attribute';
+        icon.ariaLabel = 'Add an attribute';
+        icon.title = 'Add an attribute';
 
         div.appendChild(icon);
 
