@@ -1,3 +1,6 @@
+console.log('v1.0.1');
+console.log('whats new: \n • Fixed a renaming issue');
+
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
 var whimItems = document.getElementsByTagName('li');
@@ -7,9 +10,8 @@ for (var i = 0; i < whimItems.length; i++) {
 
     el.c = localStorage.getItem(el.innerHTML + 'C');
 
-    if (localStorage.getItem(el.c + 'Name') == null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
+    if (localStorage.getItem(el.c + 'Name') !== null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
         el.name = localStorage.getItem(el.c + 'Name');
-        console.log('ENTERED');
     }
 }
 
@@ -17,15 +19,19 @@ function updateC(el) { // call when html of item is updated
     localStorage.setItem(el.innerHTML + 'C', el.c);
 }
 
-function updateList() {
+function updateList() { // call when anything in list is updated
     localStorage.setItem('yearnlist', document.getElementById('list').innerHTML);
 }
 
 function add() {
     if (document.getElementById('input').value === '') {
-        alert('Enter a gift you desire');
+        alert('Enter a gift');
     } else {
         var el = document.createElement('li');
+
+        el.c = Math.floor(100000000 + Math.random() * 900000000);
+        updateC(el);
+
         el.name = document.getElementById('input').value;
         localStorage.setItem(el.c + 'Name', el.name);
         var t = document.createTextNode(document.getElementById('input').value);
@@ -60,9 +66,7 @@ function add() {
 
         el.appendChild(div);
 
-        el.c = Math.floor(100000000 + Math.random() * 900000000);
         updateC(el);
-
         updateList();
 
         for (i = 0; i < link.length; i++) {
@@ -211,7 +215,7 @@ function clickPen(el) {
 }
 
 function clickPrice(el) {
-    entered = prompt('Enter the price of your desired gift');
+    entered = prompt('Enter the price of your gift');
 
     if (entered == null || entered == '') {
         return;
@@ -246,7 +250,7 @@ function clickLink(el) {
     el.link = localStorage.getItem(el.c + 'Link');
 
     if (el.link == null) {
-        entered = prompt('Enter the link to your desired gift');
+        entered = prompt('Enter the link to your gift');
 
         var valid = validURL(entered);
 
