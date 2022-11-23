@@ -19,12 +19,20 @@
     @apply text-base text-green-600 ml-3;
   }
 
+  .fa-solid {
+    @apply ml-3;
+  }
+
   .fa-link {
-    @apply hover:text-blue-600 transition-all mr-3;
+    @apply hover:text-blue-600 transition-all;
   }
 
   .fa-dollar-sign {
-    @apply hover:text-green-600 transition-all mr-3;
+    @apply hover:text-green-600 transition-all;
+  }
+
+  .fa-pen {
+    @apply hover:text-yellow-600 transition-all;
   }
 
   .fa-trash {

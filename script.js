@@ -1,4 +1,4 @@
-document.getElementById('list').innerHTML = localStorage.getItem('whimlist');
+document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
 var whimItems = document.getElementsByTagName('li');
 
@@ -7,20 +7,10 @@ for (var i = 0; i < whimItems.length; i++) {
 
     el.c = localStorage.getItem(el.innerHTML + 'C');
 
-    //console.log('el.c ' + el.c);
-    //console.log('price ' + localStorage.getItem(el.c + 'Price'));
-
-    /* if (localStorage.getItem(el.c + 'Price') == null) {
-        el.price = localStorage.getItem(el.c + 'Price');
-
-        console.log('entered');
-
-        var span = document.createElement('span');
-        var p = document.createTextNode('$' + el.price);
-        span.appendChild(p);
-        span.className = 'price';
-        el.appendChild(span);
-    } */
+    if (localStorage.getItem(el.c + 'Name') == null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
+        el.name = localStorage.getItem(el.c + 'Name');
+        console.log('ENTERED');
+    }
 }
 
 function updateC(el) { // call when html of item is updated
@@ -28,7 +18,7 @@ function updateC(el) { // call when html of item is updated
 }
 
 function updateList() {
-    localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
+    localStorage.setItem('yearnlist', document.getElementById('list').innerHTML);
 }
 
 function add() {
@@ -37,6 +27,7 @@ function add() {
     } else {
         var el = document.createElement('li');
         el.name = document.getElementById('input').value;
+        localStorage.setItem(el.c + 'Name', el.name);
         var t = document.createTextNode(document.getElementById('input').value);
         el.appendChild(t);
         el.classList.add('item');
@@ -54,6 +45,11 @@ function add() {
 
         var icon = document.createElement('i');
         icon.className = 'fa-solid fa-dollar-sign';
+
+        div.appendChild(icon);
+
+        icon = document.createElement('i');
+        icon.className = 'fa-solid fa-pen';
 
         div.appendChild(icon);
 
@@ -78,6 +74,12 @@ function add() {
         for (i = 0; i < price.length; i++) {
             price[i].onclick = function () {
                 clickPrice(this.parentElement.parentElement);
+            }
+        }
+
+        for (i = 0; i < pen.length; i++) {
+            pen[i].onclick = function () {
+                clickPen(this.parentElement.parentElement);
             }
         }
 
@@ -130,6 +132,13 @@ for (i = 0; i < price.length; i++) {
     }
 }
 
+var pen = document.getElementsByClassName('fa-pen');
+for (i = 0; i < pen.length; i++) {
+    pen[i].onclick = function () {
+        clickPen(this.parentElement.parentElement);
+    }
+}
+
 var trash = document.getElementsByClassName('fa-trash');
 for (i = 0; i < trash.length; i++) {
     trash[i].onclick = function () {
@@ -155,6 +164,50 @@ function clickTrash(el) {
     el.remove();
 
     updateList();
+}
+
+function clickPen(el) {
+    entered = prompt('Enter the new name of this gift');
+
+    if (entered == null || entered == '') {
+        return;
+    } else {
+        if (localStorage.getItem(el.c + 'Name') !== null) {
+            el.name = localStorage.getItem(el.c + 'Name');
+        }
+
+        el.innerHTML = el.innerHTML.replace(el.name, entered);
+        el.name = entered;
+
+        localStorage.setItem(el.c + 'Name', el.name);
+
+        updateC(el);
+        updateList();
+
+        for (i = 0; i < link.length; i++) {
+            link[i].onclick = function () {
+                clickLink(this.parentElement.parentElement);
+            }
+        }
+
+        for (i = 0; i < price.length; i++) {
+            price[i].onclick = function () {
+                clickPrice(this.parentElement.parentElement);
+            }
+        }
+
+        for (i = 0; i < pen.length; i++) {
+            pen[i].onclick = function () {
+                clickPen(this.parentElement.parentElement);
+            }
+        }
+
+        for (i = 0; i < trash.length; i++) {
+            trash[i].onclick = function () {
+                clickTrash(this.parentElement.parentElement);
+            }
+        }
+    }
 }
 
 function clickPrice(el) {
