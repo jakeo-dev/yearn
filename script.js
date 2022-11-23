@@ -1,15 +1,46 @@
 document.getElementById('list').innerHTML = localStorage.getItem('whimlist');
 
+var whimItems = document.getElementsByTagName('li');
+
+for (var i = 0; i < whimItems.length; i++) {
+    el = whimItems[i];
+
+    el.c = localStorage.getItem(el.innerHTML + 'C');
+
+    //console.log('el.c ' + el.c);
+    //console.log('price ' + localStorage.getItem(el.c + 'Price'));
+
+    /* if (localStorage.getItem(el.c + 'Price') == null) {
+        el.price = localStorage.getItem(el.c + 'Price');
+
+        console.log('entered');
+
+        var span = document.createElement('span');
+        var p = document.createTextNode('$' + el.price);
+        span.appendChild(p);
+        span.className = 'price';
+        el.appendChild(span);
+    } */
+}
+
+function updateC(el) { // call when html of item is updated
+    localStorage.setItem(el.innerHTML + 'C', el.c);
+}
+
+function updateList() {
+    localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
+}
+
 function add() {
     if (document.getElementById('input').value === '') {
         alert('Enter an item');
     } else {
-        var li = document.createElement('li');
-        li.name = document.getElementById('input').value;
+        var el = document.createElement('li');
+        el.name = document.getElementById('input').value;
         var t = document.createTextNode(document.getElementById('input').value);
-        li.appendChild(t);
-        li.classList.add('item'); // adds the 'item' class to the new element
-        document.getElementById('list').appendChild(li);
+        el.appendChild(t);
+        el.classList.add('item');
+        document.getElementById('list').appendChild(el);
 
         document.getElementById('input').value = '';
 
@@ -31,29 +62,28 @@ function add() {
 
         div.appendChild(icon);
 
-        li.appendChild(div);
+        el.appendChild(div);
 
-        localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
-        console.log(localStorage.getItem('whimlist'));
+        el.c = Math.floor(100000000 + Math.random() * 900000000);
+        updateC(el);
 
-        //localStorage.setItem(li.name + 'Name', li.name);
-        //console.log(localStorage.getItem(li.name + 'Name'));
+        updateList();
 
         for (i = 0; i < link.length; i++) {
             link[i].onclick = function () {
-                clickLink(this);
+                clickLink(this.parentElement.parentElement);
             }
         }
 
-        for (i = 0; i < tag.length; i++) {
-            tag[i].onclick = function () {
-                clickTag(this);
+        for (i = 0; i < price.length; i++) {
+            price[i].onclick = function () {
+                clickPrice(this.parentElement.parentElement);
             }
         }
 
         for (i = 0; i < trash.length; i++) {
             trash[i].onclick = function () {
-                clickTrash(this);
+                clickTrash(this.parentElement.parentElement);
             }
         }
     }
@@ -61,8 +91,8 @@ function add() {
 
 // appends trash and link button to each list item
 
-
 //I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
+
 /* var nodeList = document.getElementsByClassName('item');
 for (i = 0; i < nodeList.length; i++) {
     var div = document.createElement('div');
@@ -93,10 +123,10 @@ for (i = 0; i < link.length; i++) {
     }
 }
 
-var tag = document.getElementsByClassName('fa-dollar-sign');
-for (i = 0; i < tag.length; i++) {
-    tag[i].onclick = function () {
-        clickTag(this.parentElement.parentElement);
+var price = document.getElementsByClassName('fa-dollar-sign');
+for (i = 0; i < price.length; i++) {
+    price[i].onclick = function () {
+        clickPrice(this.parentElement.parentElement);
     }
 }
 
@@ -123,11 +153,10 @@ document.body.onkeyup = function (event) {
 function clickTrash(el) {
     el.remove();
 
-    localStorage.setItem('whimlist', document.getElementById('list').innerHTML);
-    console.log(localStorage.getItem('whimlist'));
+    updateList();
 }
 
-function clickTag(el) {
+function clickPrice(el) {
     entered = prompt('Enter the price of your desired gift');
 
     if (entered == null || entered == '') {
@@ -144,18 +173,26 @@ function clickTag(el) {
             el.getElementsByClassName('price')[0].remove();
         }
 
-        el.tag = (Math.round(entered * 100)) / 100;
+        el.price = (Math.round(entered * 100)) / 100;
+
+        localStorage.setItem(el.c + 'Price', el.price);
 
         var span = document.createElement('span');
-        var p = document.createTextNode('$' + el.tag);
+        var p = document.createTextNode('$' + el.price);
         span.appendChild(p);
         span.className = 'price';
         el.appendChild(span);
+
+        updateC(el);
+        updateList();
     }
 }
 
 function clickLink(el) {
-    el.link = localStorage.getItem(el.innerHTML.link + 'Link');
+    el.link = localStorage.getItem(el.c + 'Link');
+
+    //console.log(el.c);
+    //console.log(el.link);
 
     if (el.link == null) {
         entered = prompt('Enter the link to your desired gift');
@@ -169,7 +206,7 @@ function clickLink(el) {
         } else {
             el.link = entered;
 
-            localStorage.setItem(el.innerHTML.link + 'Link', el.link);
+            localStorage.setItem(el.c + 'Link', el.link);
         }
     } else {
         if (el.link.startsWith('http')) {
