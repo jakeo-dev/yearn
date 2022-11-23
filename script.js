@@ -137,10 +137,11 @@ for (i = 0; i < trash.length; i++) {
     }
 }
 
-var list = document.querySelector('ul'); // sets 'list' to the entire html list, 'myUL'
-list.addEventListener('click', function (event) { // add event listener to the list for when an item is clicked
+var list = document.querySelector('ul');
+list.addEventListener('click', function (event) {
     if (event.target.classList.contains('item')) {
-        event.target.classList.toggle('done'); // toggles the checked class, if its checked it will uncheck, if its not checked, it will be checked
+        event.target.classList.toggle('done');
+        updateList();
     }
 }, false);
 
@@ -190,9 +191,6 @@ function clickPrice(el) {
 
 function clickLink(el) {
     el.link = localStorage.getItem(el.c + 'Link');
-
-    //console.log(el.c);
-    //console.log(el.link);
 
     if (el.link == null) {
         entered = prompt('Enter the link to your desired gift');
