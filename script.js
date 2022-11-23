@@ -1,5 +1,5 @@
-console.log('v1.0.2');
-console.log('whats new: \n • Accessibility improvements');
+console.log('v1.0.3');
+console.log('whats new: \n • Ability to add attributes of the gift that appear next to the gift name');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
@@ -12,6 +12,10 @@ for (var i = 0; i < whimItems.length; i++) {
 
     if (localStorage.getItem(el.c + 'Name') !== null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
         el.name = localStorage.getItem(el.c + 'Name');
+    }
+
+    if (el.price == null || el.price == undefined) {
+        el.price = 0;
     }
 }
 
@@ -39,34 +43,50 @@ function add() {
         el.classList.add('item');
         document.getElementById('list').appendChild(el);
 
+        el.price = 0;
+        localStorage.setItem(el.c + 'Price', el.price);
+        var span = document.createElement('span');
+        var p = document.createTextNode('$' + el.price);
+        span.appendChild(p);
+        span.className = 'attr price text-green-600 hidden';
+        span.id = el.c + 'Price';
+        el.appendChild(span);
+
         document.getElementById('input').value = '';
 
         var div = document.createElement('div');
-        div.className = 'opt';
+        div.className = 'opt float-right';
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-link';
+        icon.className = 'fa-solid fa-link ml-3';
         icon.ariaLabel = 'Add link to gift';
         icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-dollar-sign';
+        icon.className = 'fa-solid fa-dollar-sign ml-3';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
+        var icon = document.createElement('i');
+        icon.className = 'fa-solid fa-tag ml-3';
+        icon.ariaLabel = 'Add a gift attribute';
+        icon.title = 'Add a gift attribute';
+
+        div.appendChild(icon);
+
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-pen';
+        icon.className = 'fa-solid fa-pen ml-3';
         icon.ariaLabel = 'Edit gift name';
         icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-trash';
+        icon.className = 'fa-solid fa-trash ml-3';
         icon.ariaLabel = 'Remove gift';
         icon.title = 'Remove gift';
 
@@ -86,6 +106,12 @@ function add() {
         for (i = 0; i < price.length; i++) {
             price[i].onclick = function () {
                 clickPrice(this.parentElement.parentElement);
+            }
+        }
+
+        for (i = 0; i < tag.length; i++) {
+            tag[i].onclick = function () {
+                clickTag(this.parentElement.parentElement);
             }
         }
 
@@ -110,20 +136,20 @@ function add() {
 /* var nodeList = document.getElementsByClassName('item');
 for (i = 0; i < nodeList.length; i++) {
     var div = document.createElement('div');
-    div.className = 'opt';
+    div.className = 'opt float-right';
 
     var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-link';
+    icon.className = 'fa-solid fa-link ml-3';
 
     div.appendChild(icon);
 
     var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-dollar-sign';
+    icon.className = 'fa-solid fa-dollar-sign ml-3';
 
     div.appendChild(icon);
 
     icon = document.createElement('i');
-    icon.className = 'fa-solid fa-trash';
+    icon.className = 'fa-solid fa-trash ml-3';
 
     div.appendChild(icon);
 
@@ -144,6 +170,13 @@ for (i = 0; i < price.length; i++) {
     }
 }
 
+var tag = document.getElementsByClassName('fa-tag');
+for (i = 0; i < tag.length; i++) {
+    tag[i].onclick = function () {
+        clickTag(this.parentElement.parentElement);
+    }
+}
+
 var pen = document.getElementsByClassName('fa-pen');
 for (i = 0; i < pen.length; i++) {
     pen[i].onclick = function () {
@@ -158,10 +191,16 @@ for (i = 0; i < trash.length; i++) {
     }
 }
 
-var list = document.querySelector('ul');
-list.addEventListener('click', function (event) {
+document.querySelector('ul').addEventListener('click', function (event) {
     if (event.target.classList.contains('item')) {
         event.target.classList.toggle('done');
+        updateList();
+    }
+}, false);
+
+document.querySelector('ul').addEventListener('click', function (event) {
+    if (event.target.classList.contains('attr')) {
+        event.target.remove();
         updateList();
     }
 }, false);
@@ -222,6 +261,26 @@ function clickPen(el) {
     }
 }
 
+function clickTag(el) {
+    entered = prompt('Enter an attribute (16 characters max)');
+
+    if (entered == null || entered == '') {
+        return;
+    } else if (entered.length > 16) {
+        alert('Attributes can only have a maximum of 16 characters');
+    } else {
+
+        var span = document.createElement('span');
+        var p = document.createTextNode(entered);
+        span.appendChild(p);
+        span.className = 'attr';
+        el.appendChild(span);
+
+        updateC(el);
+        updateList();
+    }
+}
+
 function clickPrice(el) {
     entered = prompt('Enter the price of your gift');
 
@@ -231,23 +290,22 @@ function clickPrice(el) {
         alert('Enter a valid number');
     } else if (entered <= 0) {
         alert('Enter a higher price');
-    } else if (entered > 999999999) {
+    } else if (entered > 9999999999) {
         alert('Enter a lower price');
     } else {
-
-        if (el.getElementsByClassName('price')[0]) {
-            el.getElementsByClassName('price')[0].remove();
+        if (el.getElementsByClassName('price')[0].classList.contains('hidden')) {
+            el.getElementsByClassName('price')[0].classList.remove('hidden');
         }
 
         el.price = (Math.round(entered * 100)) / 100;
 
-        localStorage.setItem(el.c + 'Price', el.price);
+        console.log(el.c);
+        console.log(document.getElementById(el.c + 'Price'));
+        console.log(document.getElementById(el.c + 'Price').innerHTML);
+        console.log(document.getElementById(el.c + 'Price').innerText);
 
-        var span = document.createElement('span');
-        var p = document.createTextNode('$' + el.price);
-        span.appendChild(p);
-        span.className = 'price';
-        el.appendChild(span);
+        document.getElementById(el.c + 'Price').innerText = '$' + el.price;
+        localStorage.setItem(el.c + 'Price', el.price);
 
         updateC(el);
         updateList();

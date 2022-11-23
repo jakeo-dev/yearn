@@ -11,16 +11,8 @@
     @apply line-through decoration-slate-700 decoration-[2.5px];
   }
 
-  .opt {
-    @apply float-right;
-  }
-
-  .price {
-    @apply text-base text-green-600 ml-3;
-  }
-
-  .fa-solid {
-    @apply ml-3;
+  .attr {
+    @apply text-base text-gray-600 hover:line-through decoration-slate-700 ml-3;
   }
 
   .fa-link {
@@ -29,6 +21,10 @@
 
   .fa-dollar-sign {
     @apply hover:text-green-600 transition-all;
+  }
+
+  .fa-tag {
+    @apply hover:text-yellow-600 transition-all;
   }
 
   .fa-pen {
