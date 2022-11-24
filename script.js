@@ -1,5 +1,5 @@
-console.log('v1.0.4');
-console.log('whats new: \n • Design improvements');
+console.log('v1.0.5');
+console.log('whats new: \n • Improvements and fixes');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
@@ -200,7 +200,13 @@ document.querySelector('ul').addEventListener('click', function (event) {
 
 document.querySelector('ul').addEventListener('click', function (event) {
     if (event.target.classList.contains('attr')) {
-        event.target.remove();
+        if (event.target.classList.contains('price')) {
+            event.target.classList.add('hidden');
+        } else {
+            event.target.remove();
+        }
+
+        updateC(el);
         updateList();
     }
 }, false);
@@ -298,11 +304,6 @@ function clickPrice(el) {
         }
 
         el.price = (Math.round(entered * 100)) / 100;
-
-        console.log(el.c);
-        console.log(document.getElementById(el.c + 'Price'));
-        console.log(document.getElementById(el.c + 'Price').innerHTML);
-        console.log(document.getElementById(el.c + 'Price').innerText);
 
         document.getElementById(el.c + 'Price').innerText = '$' + el.price;
         localStorage.setItem(el.c + 'Price', el.price);
