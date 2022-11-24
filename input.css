@@ -34,4 +34,12 @@
   .fa-trash {
     @apply hover:text-red-600 transition-all;
   }
+
+  .fadeIn {
+    @apply invisible opacity-0 transition-all;
+  }
+
+  .fadeOut {
+    @apply visible opacity-100 transition-all;
+  }
 }

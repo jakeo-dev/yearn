@@ -1,7 +1,7 @@
-console.log('v1.0.6');
-console.log('whats new: \n • Improvements and fixes');
+console.log('v1.0.7');
+console.log('whats new: \n • Added a button to share your list \n • Improvements and fixes');
 
-document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
+document.getElementById('list').innerHTML = localStorage.getItem('yearnList');
 
 var yearnItems = document.getElementsByTagName('li');
 
@@ -24,24 +24,25 @@ function updateC(el) { // call when html of item is updated
 }
 
 function updateList() { // call when anything in list is updated
-    localStorage.setItem('yearnlist', document.getElementById('list').innerHTML);
+    localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
 }
 
 function add() {
     let sameN = false;
+    let input = document.getElementById('input').value.trim();
 
     for (var i = 0; i < yearnItems.length; i++) {
         el = yearnItems[i];
 
-        if (document.getElementById('input').value == el.name) {
+        if (input.toLowerCase() == el.name.toLowerCase()) {
             sameN = true;
         }
     }
 
-    if (document.getElementById('input').value === '') {
+    if (input === '') {
         alert('Enter a gift');
     } else if (sameN) {
-        alert('There is already a gift with this name');
+        alert('You already want a gift with that name');
         sameN = false;
     } else {
         var el = document.createElement('li');
@@ -49,9 +50,9 @@ function add() {
         el.c = Math.floor(100000000 + Math.random() * 900000000);
         updateC(el);
 
-        el.name = document.getElementById('input').value;
+        el.name = input;
         localStorage.setItem(el.c + 'Name', el.name);
-        var t = document.createTextNode(document.getElementById('input').value);
+        var t = document.createTextNode(input);
         el.appendChild(t);
         el.classList.add('item');
         document.getElementById('list').appendChild(el);
@@ -71,35 +72,35 @@ function add() {
         div.className = 'opt float-right';
 
         var icon = document.createElement('i');
-        icon.className = 'fas fa-link ml-3';
+        icon.className = 'fa-solid fa-link ml-3';
         icon.ariaLabel = 'Add link to gift';
         icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
-        icon.className = 'fas fa-dollar-sign ml-3';
+        icon.className = 'fa-solid fa-dollar-sign ml-3';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
-        icon.className = 'fas fa-tag ml-3';
+        icon.className = 'fa-solid fa-tag ml-3';
         icon.ariaLabel = 'Add an attribute';
         icon.title = 'Add an attribute';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fas fa-pen ml-3';
+        icon.className = 'fa-solid fa-pen ml-3';
         icon.ariaLabel = 'Edit gift name';
         icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fas fa-trash ml-3';
+        icon.className = 'fa-solid fa-trash ml-3';
         icon.ariaLabel = 'Remove gift';
         icon.title = 'Remove gift';
 
@@ -152,17 +153,17 @@ for (i = 0; i < nodeList.length; i++) {
     div.className = 'opt float-right';
 
     var icon = document.createElement('i');
-    icon.className = 'fas fa-link ml-3';
+    icon.className = 'fa-solid fa-link ml-3';
 
     div.appendChild(icon);
 
     var icon = document.createElement('i');
-    icon.className = 'fas fa-dollar-sign ml-3';
+    icon.className = 'fa-solid fa-dollar-sign ml-3';
 
     div.appendChild(icon);
 
     icon = document.createElement('i');
-    icon.className = 'fas fa-trash ml-3';
+    icon.className = 'fa-solid fa-trash ml-3';
 
     div.appendChild(icon);
 
@@ -205,25 +206,25 @@ for (i = 0; i < trash.length; i++) {
 }
 
 document.querySelector('ul').addEventListener('click', function (event) {
-    if (event.target.classList.contains('item')) {
+    //console.log('**TARGET**: ' + event.target.innerHTML);
+    //console.log('**TARGET PARENT**: ' + event.target.parentElement.innerHTML);
+
+    el = event.target.parentElement;
+
+    if (event.target.classList.contains('attr') && event.target.classList.contains('price')) {
+        event.target.classList.add('hidden');
+
+    } else if (event.target.classList.contains('attr')) {
+        event.target.remove();
+
+    } else if (event.target.classList.contains('item')) {
         event.target.classList.toggle('done');
-        updateList();
+        el = event.target;
     }
-}, false);
 
-document.querySelector('ul').addEventListener('click', function (event) {
-    if (event.target.classList.contains('attr')) {
-        if (event.target.classList.contains('price')) {
-            event.target.classList.add('hidden');
-        } else {
-            event.target.remove();
-        }
+    updateC(el);
+    updateList();
 
-        updateC(event.target.parentElement);
-        updateList();
-
-        el = event.target.parentElement;
-    }
 }, false);
 
 document.body.onkeyup = function (event) {
@@ -239,7 +240,7 @@ function clickTrash(el) {
 }
 
 function clickPen(el) {
-    entered = prompt('Enter the new name of this gift');
+    entered = prompt('Enter the new name of this gift', el.name);
 
     if (entered == null || entered == '') {
         return;
@@ -283,12 +284,12 @@ function clickPen(el) {
 }
 
 function clickTag(el) {
-    entered = prompt('Enter an attribute (16 characters max)');
+    entered = prompt('Enter an attribute (20 characters max)');
 
     if (entered == null || entered == '') {
         return;
-    } else if (entered.length > 16) {
-        alert('Attributes can only have a maximum of 16 characters');
+    } else if (entered.length > 20) {
+        alert('Attributes can only have a maximum of 20 characters');
     } else {
 
         var span = document.createElement('span');
@@ -364,33 +365,68 @@ function validURL(string) {
     return pattern.test(string);
 }
 
+let text = '';
+
 function share() {
-    let text = '';
+    if (yearnItems.length < 1) {
+        document.getElementById('shareList').innerText = 'Add items to share your list';
+        document.getElementById('copyB').classList.add('invisible');
+        text = '';
+    } else {
+        document.getElementById('copyB').classList.remove('invisible');
 
-    for (var i = 0; i < yearnItems.length; i++) {
-        el = yearnItems[i];
+        for (var i = 0; i < yearnItems.length; i++) {
+            el = yearnItems[i];
 
-        localStorage.getItem(el.innerHTML + 'C');
-        el.name = localStorage.getItem(el.c + 'Name');
-        if (localStorage.getItem(el.c + 'Price') > 0 && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined) {
-            el.price = ' $' + localStorage.getItem(el.c + 'Price');
-        } else {
-            el.price = '';
-        }
-        if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined) {
-            el.link = localStorage.getItem(el.c + 'Link');
+            localStorage.getItem(el.innerHTML + 'C');
+            el.name = localStorage.getItem(el.c + 'Name');
+            if (localStorage.getItem(el.c + 'Price') > 0 && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined) {
+                el.price = ' ($' + localStorage.getItem(el.c + 'Price') + ')';
+            } else {
+                el.price = '';
+            }
+            if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined) {
+                el.link = localStorage.getItem(el.c + 'Link');
 
-            if (!el.link.includes('https://') && !el.link.includes('http://')) {
-                el.link = 'https://' + el.link;
+                if (!el.link.includes('https://') && !el.link.includes('http://')) {
+                    el.link = 'https://' + el.link;
+                }
+
+                el.link = '\n' + el.link;
+            } else {
+                el.link = '';
             }
 
-            el.link = ' ' + el.link;
-        } else {
-            el.link = '';
+            text = `${text}• ${el.name}${el.price}${el.link}\n`
+
+            if (i < yearnItems.length - 1) {
+                text = text + '\n';
+            }
         }
 
-        text = `${text}• ${el.name}${el.price}\n${el.link}\n`
+        text = text + '\nvia https://yearn.jorch.xyz'
+
+        document.getElementById('shareList').innerText = text;
     }
 
+    document.getElementById('modal').classList.remove('fadeIn');
+    document.getElementById('modal').classList.add('fadeOut');
+}
+
+function copy() {
     navigator.clipboard.writeText(text);
+    document.getElementById('copyB').innerText = 'Copied!';
+}
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById('modal')) {
+        hide();
+    }
+}
+
+function hide() {
+    document.getElementById('modal').classList.add('fadeIn');
+    document.getElementById('modal').classList.remove('fadeOut');
+    document.getElementById('copyB').innerText = 'Copy';
+    text = '';
 }
