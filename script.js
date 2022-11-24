@@ -1,12 +1,12 @@
-console.log('v1.0.5');
+console.log('v1.0.6');
 console.log('whats new: \n • Improvements and fixes');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnlist');
 
-var whimItems = document.getElementsByTagName('li');
+var yearnItems = document.getElementsByTagName('li');
 
-for (var i = 0; i < whimItems.length; i++) {
-    el = whimItems[i];
+for (var i = 0; i < yearnItems.length; i++) {
+    el = yearnItems[i];
 
     el.c = localStorage.getItem(el.innerHTML + 'C');
 
@@ -28,8 +28,21 @@ function updateList() { // call when anything in list is updated
 }
 
 function add() {
+    let sameN = false;
+
+    for (var i = 0; i < yearnItems.length; i++) {
+        el = yearnItems[i];
+
+        if (document.getElementById('input').value == el.name) {
+            sameN = true;
+        }
+    }
+
     if (document.getElementById('input').value === '') {
         alert('Enter a gift');
+    } else if (sameN) {
+        alert('There is already a gift with this name');
+        sameN = false;
     } else {
         var el = document.createElement('li');
 
@@ -48,7 +61,7 @@ function add() {
         var span = document.createElement('span');
         var p = document.createTextNode('$' + el.price);
         span.appendChild(p);
-        span.className = 'attr price text-green-600 hidden';
+        span.className = 'attr price text-green-700 hidden';
         span.id = el.c + 'Price';
         el.appendChild(span);
 
@@ -58,35 +71,35 @@ function add() {
         div.className = 'opt float-right';
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-link ml-3';
+        icon.className = 'fas fa-link ml-3';
         icon.ariaLabel = 'Add link to gift';
         icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-dollar-sign ml-3';
+        icon.className = 'fas fa-dollar-sign ml-3';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-tag ml-3';
+        icon.className = 'fas fa-tag ml-3';
         icon.ariaLabel = 'Add an attribute';
         icon.title = 'Add an attribute';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-pen ml-3';
+        icon.className = 'fas fa-pen ml-3';
         icon.ariaLabel = 'Edit gift name';
         icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-trash ml-3';
+        icon.className = 'fas fa-trash ml-3';
         icon.ariaLabel = 'Remove gift';
         icon.title = 'Remove gift';
 
@@ -139,17 +152,17 @@ for (i = 0; i < nodeList.length; i++) {
     div.className = 'opt float-right';
 
     var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-link ml-3';
+    icon.className = 'fas fa-link ml-3';
 
     div.appendChild(icon);
 
     var icon = document.createElement('i');
-    icon.className = 'fa-solid fa-dollar-sign ml-3';
+    icon.className = 'fas fa-dollar-sign ml-3';
 
     div.appendChild(icon);
 
     icon = document.createElement('i');
-    icon.className = 'fa-solid fa-trash ml-3';
+    icon.className = 'fas fa-trash ml-3';
 
     div.appendChild(icon);
 
@@ -206,8 +219,10 @@ document.querySelector('ul').addEventListener('click', function (event) {
             event.target.remove();
         }
 
-        updateC(el);
+        updateC(event.target.parentElement);
         updateList();
+
+        el = event.target.parentElement;
     }
 }, false);
 
@@ -347,4 +362,35 @@ function validURL(string) {
     // copied from stackoverflow!! https://stackoverflow.com/a/9284473
     var pattern = new RegExp('(?:(?:(?:https?|ftp):)?\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:[/?#]\\S*)?');
     return pattern.test(string);
+}
+
+function share() {
+    let text = '';
+
+    for (var i = 0; i < yearnItems.length; i++) {
+        el = yearnItems[i];
+
+        localStorage.getItem(el.innerHTML + 'C');
+        el.name = localStorage.getItem(el.c + 'Name');
+        if (localStorage.getItem(el.c + 'Price') > 0 && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined) {
+            el.price = ' $' + localStorage.getItem(el.c + 'Price');
+        } else {
+            el.price = '';
+        }
+        if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined) {
+            el.link = localStorage.getItem(el.c + 'Link');
+
+            if (!el.link.includes('https://') && !el.link.includes('http://')) {
+                el.link = 'https://' + el.link;
+            }
+
+            el.link = ' ' + el.link;
+        } else {
+            el.link = '';
+        }
+
+        text = `${text}• ${el.name}${el.price}\n${el.link}\n`
+    }
+
+    navigator.clipboard.writeText(text);
 }

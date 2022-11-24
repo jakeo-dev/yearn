@@ -20,7 +20,7 @@
   }
 
   .fa-dollar-sign {
-    @apply hover:text-green-600 transition-all;
+    @apply hover:text-green-700 transition-all;
   }
 
   .fa-tag {
