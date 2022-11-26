@@ -371,6 +371,20 @@ function clickLink(el) {
     } else if (valid == false) {
         alert('Enter a valid URL');
     } else {
+        if (!el.getElementsByClassName('gotospan')[0]) {
+            el.link = '';
+            localStorage.setItem(el.c + 'Link', el.link);
+            var span = document.createElement('span');
+            icon = document.createElement('i');
+            icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
+            icon.ariaLabel = 'Go to gift link';
+            icon.title = 'Go to gift link';
+            span.appendChild(icon);
+            span.className = 'attr gotospan hidden';
+            span.id = el.c + 'Link';
+            el.appendChild(span);
+        }
+
         if (el.getElementsByClassName('gotospan')[0].classList.contains('hidden')) {
             el.getElementsByClassName('gotospan')[0].classList.remove('hidden');
         }
