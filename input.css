@@ -4,19 +4,27 @@
 
 @layer components {
   .item {
-    @apply text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-3 mb-3;
+    @apply text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-[0.875rem] mb-3;
   }
 
   .done {
-    @apply line-through decoration-slate-700 decoration-[2.5px];
+    @apply line-through decoration-slate-800 decoration-[2.5px];
   }
 
   .attr {
-    @apply text-base text-gray-600 hover:line-through decoration-slate-700 ml-3;
+    @apply /* bg-slate-350 rounded-md */ text-base text-gray-700 hover:line-through decoration-slate-800 /* p-1 px-2 */ ml-3;
+  }
+
+  .goto {
+    @apply text-blue-700 hover:text-blue-800 hover:decoration-0 decoration-transparent;
+  }
+
+  .price {
+    @apply text-green-700;
   }
 
   .fa-link {
-    @apply hover:text-blue-600 transition-all;
+    @apply hover:text-blue-700 transition-all;
   }
 
   .fa-dollar-sign {

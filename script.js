@@ -1,5 +1,5 @@
-console.log('v1.0.7');
-console.log('whats new: \n • Added a button to share your list \n • Improvements and fixes');
+console.log('v1.0.8');
+console.log('whats new:\n • Prices and links are now similar to attributes\n • Improvements and fixes');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnList');
 
@@ -14,10 +14,13 @@ for (var i = 0; i < yearnItems.length; i++) {
         el.name = localStorage.getItem(el.c + 'Name');
     }
 
-    if (el.price == null || el.price == undefined) {
-        el.price = 0;
-    }
+    el.price = localStorage.getItem(el.c + 'Price');
 }
+
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
 
 function updateC(el) { // call when html of item is updated
     localStorage.setItem(el.innerHTML + 'C', el.c);
@@ -57,12 +60,24 @@ function add() {
         el.classList.add('item');
         document.getElementById('list').appendChild(el);
 
-        el.price = 0;
+        el.link = '';
+        localStorage.setItem(el.c + 'Link', el.link);
+        var span = document.createElement('span');
+        icon = document.createElement('i');
+        icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
+        icon.ariaLabel = 'Go to gift link';
+        icon.title = 'Go to gift link';
+        span.appendChild(icon);
+        span.className = 'attr gotospan hidden';
+        span.id = el.c + 'Link';
+        el.appendChild(span);
+
+        el.price = '$0';
         localStorage.setItem(el.c + 'Price', el.price);
         var span = document.createElement('span');
         var p = document.createTextNode('$' + el.price);
         span.appendChild(p);
-        span.className = 'attr price text-green-700 hidden';
+        span.className = 'attr price hidden';
         span.id = el.c + 'Price';
         el.appendChild(span);
 
@@ -78,14 +93,14 @@ function add() {
 
         div.appendChild(icon);
 
-        var icon = document.createElement('i');
+        icon = document.createElement('i');
         icon.className = 'fa-solid fa-dollar-sign ml-3';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
-        var icon = document.createElement('i');
+        icon = document.createElement('i');
         icon.className = 'fa-solid fa-tag ml-3';
         icon.ariaLabel = 'Add an attribute';
         icon.title = 'Add an attribute';
@@ -206,20 +221,28 @@ for (i = 0; i < trash.length; i++) {
 }
 
 document.querySelector('ul').addEventListener('click', function (event) {
-    //console.log('**TARGET**: ' + event.target.innerHTML);
-    //console.log('**TARGET PARENT**: ' + event.target.parentElement.innerHTML);
-
     el = event.target.parentElement;
 
     if (event.target.classList.contains('attr') && event.target.classList.contains('price')) {
         event.target.classList.add('hidden');
+        el.price = '$0';
+        localStorage.setItem(el.c + 'Price', el.price);
+
+    } else if (event.target.classList.contains('goto')) {
+        el = event.target.parentElement.parentElement;
+        el.link = localStorage.getItem(el.c + 'Link');
+        window.open(el.link);
+
+    } else if (event.target.classList.contains('gotospan')) {
+        el.link = localStorage.getItem(el.c + 'Link');
+        window.open(el.link);
 
     } else if (event.target.classList.contains('attr')) {
         event.target.remove();
 
     } else if (event.target.classList.contains('item')) {
-        event.target.classList.toggle('done');
         el = event.target;
+        event.target.classList.toggle('done');
     }
 
     updateC(el);
@@ -266,6 +289,13 @@ function clickPen(el) {
         for (i = 0; i < price.length; i++) {
             price[i].onclick = function () {
                 clickPrice(this.parentElement.parentElement);
+            }
+        }
+
+        var tag = document.getElementsByClassName('fa-tag');
+        for (i = 0; i < tag.length; i++) {
+            tag[i].onclick = function () {
+                clickTag(this.parentElement.parentElement);
             }
         }
 
@@ -319,9 +349,9 @@ function clickPrice(el) {
             el.getElementsByClassName('price')[0].classList.remove('hidden');
         }
 
-        el.price = (Math.round(entered * 100)) / 100;
+        el.price = formatter.format((Math.round(entered * 100)) / 100);
 
-        document.getElementById(el.c + 'Price').innerText = '$' + el.price;
+        document.getElementById(el.c + 'Price').innerText = el.price;
         localStorage.setItem(el.c + 'Price', el.price);
 
         updateC(el);
@@ -332,26 +362,29 @@ function clickPrice(el) {
 function clickLink(el) {
     el.link = localStorage.getItem(el.c + 'Link');
 
-    if (el.link == null) {
-        entered = prompt('Enter the link to your gift');
+    entered = prompt('Enter the link to your gift', el.link);
 
-        var valid = validURL(entered);
+    var valid = validURL(entered);
 
-        if (entered == null || entered == '') {
-            return;
-        } else if (valid == false) {
-            alert('Enter a valid URL');
-        } else {
-            el.link = entered;
-
-            localStorage.setItem(el.c + 'Link', el.link);
-        }
+    if (entered == null || entered == '') {
+        return;
+    } else if (valid == false) {
+        alert('Enter a valid URL');
     } else {
-        if (el.link.startsWith('http')) {
-            window.open(el.link);
-        } else {
-            window.open('https://' + el.link);
+        if (el.getElementsByClassName('gotospan')[0].classList.contains('hidden')) {
+            el.getElementsByClassName('gotospan')[0].classList.remove('hidden');
         }
+
+        if (entered.startsWith('http')) {
+            el.link = entered;
+        } else {
+            el.link = 'https://' + entered;
+        }
+
+        localStorage.setItem(el.c + 'Link', el.link);
+
+        updateC(el);
+        updateList();
     }
 }
 
@@ -379,25 +412,27 @@ function share() {
             el = yearnItems[i];
 
             localStorage.getItem(el.innerHTML + 'C');
-            el.name = localStorage.getItem(el.c + 'Name');
-            if (localStorage.getItem(el.c + 'Price') > 0 && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined) {
-                el.price = ' ($' + localStorage.getItem(el.c + 'Price') + ')';
-            } else {
-                el.price = '';
-            }
-            if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined) {
-                el.link = localStorage.getItem(el.c + 'Link');
+            el.shareName = localStorage.getItem(el.c + 'Name');
 
-                if (!el.link.includes('https://') && !el.link.includes('http://')) {
-                    el.link = 'https://' + el.link;
+            if (localStorage.getItem(el.c + 'Price') !== '$0' && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined && localStorage.getItem(el.c + 'Price') !== '') {
+                el.sharePrice = ' (' + localStorage.getItem(el.c + 'Price') + ')';
+            } else {
+                el.sharePrice = '';
+            }
+
+            if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined && localStorage.getItem(el.c + 'Link') !== '') {
+                el.shareLink = localStorage.getItem(el.c + 'Link');
+
+                if (!el.shareLink.startsWith('http')) {
+                    el.shareLink = 'https://' + el.shareLink;
                 }
 
-                el.link = '\n' + el.link;
+                el.shareLink = '\n' + el.shareLink;
             } else {
-                el.link = '';
+                el.shareLink = '';
             }
 
-            text = `${text}• ${el.name}${el.price}${el.link}\n`
+            text = `${text}• ${el.shareName}${el.sharePrice}${el.shareLink}\n`
 
             if (i < yearnItems.length - 1) {
                 text = text + '\n';
