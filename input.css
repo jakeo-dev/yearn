@@ -12,11 +12,15 @@
   }
 
   .attr {
-    @apply /* bg-slate-350 rounded-md */ text-base text-gray-700 hover:line-through decoration-slate-800 /* p-1 px-2 */ ml-3;
+    @apply inline-flex /* bg-slate-350 rounded-md */ text-base text-gray-600 hover:line-through decoration-slate-700 /* p-1 px-2 */ ml-3;
   }
 
   .goto {
     @apply text-blue-700 hover:text-blue-800 hover:decoration-0 decoration-transparent;
+  }
+
+  .gotospan {
+    @apply hover:decoration-0 decoration-transparent;
   }
 
   .price {

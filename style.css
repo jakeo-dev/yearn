@@ -541,11 +541,12 @@ video {
 
 .attr {
   margin-left: 0.75rem;
+  display: inline-flex;
   font-size: 1rem;
   line-height: 1.5rem;
   --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
-  text-decoration-color: #1e293b;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+  text-decoration-color: #334155;
 }
 
 .attr:hover {
@@ -561,6 +562,14 @@ video {
 .goto:hover {
   --tw-text-opacity: 1;
   color: rgb(30 64 175 / var(--tw-text-opacity));
+  text-decoration-thickness: 0px;
+}
+
+.gotospan {
+  text-decoration-color: transparent;
+}
+
+.gotospan:hover {
   text-decoration-thickness: 0px;
 }
 
@@ -692,6 +701,10 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -807,12 +820,16 @@ video {
   --tw-gradient-to: #2563eb;
 }
 
-.p-6 {
-  padding: 1.5rem;
+.p-4 {
+  padding: 1rem;
 }
 
 .p-9 {
   padding: 2.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .p-3 {
@@ -825,11 +842,6 @@ video {
 
 .p-\[0\.875rem\] {
   padding: 0.875rem;
-}
-
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .px-4 {
@@ -869,6 +881,11 @@ video {
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .text-slate-900 {
@@ -927,14 +944,25 @@ video {
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
-@media (min-width: 1024px) {
-  .lg\:p-24 {
-    padding: 6rem;
+@media (min-width: 768px) {
+  .md\:ml-3 {
+    margin-left: 0.75rem;
   }
 
-  .lg\:px-40 {
-    padding-left: 10rem;
-    padding-right: 10rem;
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:p-20 {
+    padding: 5rem;
+  }
+
+  .lg\:px-36 {
+    padding-left: 9rem;
+    padding-right: 9rem;
   }
 }
 

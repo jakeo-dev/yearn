@@ -1,5 +1,5 @@
-console.log('v1.0.8');
-console.log('whats new:\n • Prices and links are now similar to attributes\n • Improvements and fixes');
+//console.log('v1.0.9');
+console.log('whats new:\n • Mobile improvements and fixes');
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnList');
 
@@ -87,35 +87,35 @@ function add() {
         div.className = 'opt float-right';
 
         var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-link ml-3';
+        icon.className = 'fa-solid fa-link text-base md:text-xl ml-2 md:ml-3';
         icon.ariaLabel = 'Add link to gift';
         icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-dollar-sign ml-3';
+        icon.className = 'fa-solid fa-dollar-sign text-base md:text-xl ml-2 md:ml-3';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-tag ml-3';
+        icon.className = 'fa-solid fa-tag text-base md:text-xl ml-2 md:ml-3';
         icon.ariaLabel = 'Add an attribute';
         icon.title = 'Add an attribute';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-pen ml-3';
+        icon.className = 'fa-solid fa-pen text-base md:text-xl ml-2 md:ml-3';
         icon.ariaLabel = 'Edit gift name';
         icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-trash ml-3';
+        icon.className = 'fa-solid fa-trash text-base md:text-xl ml-2 md:ml-3';
         icon.ariaLabel = 'Remove gift';
         icon.title = 'Remove gift';
 
