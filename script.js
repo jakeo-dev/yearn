@@ -1,11 +1,16 @@
-//console.log('v1.0.9');
-console.log('whats new:\n • Mobile improvements and fixes');
+//console.log('v1.0.10');
+console.log('whats new:\n • Price of all gifts combined is now shown above list\n • Mobile improvements and fixes');
+
+let formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnList');
 
-var yearnItems = document.getElementsByTagName('li');
+let yearnItems = document.getElementsByTagName('li');
 
-for (var i = 0; i < yearnItems.length; i++) {
+for (let i = 0; i < yearnItems.length; i++) {
     el = yearnItems[i];
 
     el.c = localStorage.getItem(el.innerHTML + 'C');
@@ -17,10 +22,7 @@ for (var i = 0; i < yearnItems.length; i++) {
     el.price = localStorage.getItem(el.c + 'Price');
 }
 
-var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-});
+updateFP();
 
 function updateC(el) { // call when html of item is updated
     localStorage.setItem(el.innerHTML + 'C', el.c);
@@ -30,11 +32,35 @@ function updateList() { // call when anything in list is updated
     localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
 }
 
+function updateFP() {
+    let fullPrice = 0;
+
+    for (let i = 0; i < document.getElementsByClassName('price').length; i++) {
+        if (document.getElementsByClassName('price')[i].classList.contains('hidden')) {
+            document.getElementsByClassName('price')[i].innerText = '$0';
+        }
+
+        p = document.getElementsByClassName('price')[i].innerText.replace('$', '').replace(',', '');
+
+        fullPrice = +fullPrice + +p;
+    }
+
+    fullPrice = formatter.format(fullPrice);
+    localStorage.setItem('fullPrice', fullPrice);
+
+    if (fullPrice == '$0.00') {
+        document.getElementById('listPrice').classList.add('hidden');
+    } else {
+        document.getElementById('listPrice').classList.remove('hidden');
+        document.getElementById('listPrice').innerText = 'List Price: ' + fullPrice;
+    }
+}
+
 function add() {
     let sameN = false;
     let input = document.getElementById('input').value.trim();
 
-    for (var i = 0; i < yearnItems.length; i++) {
+    for (let i = 0; i < yearnItems.length; i++) {
         el = yearnItems[i];
 
         if (input.toLowerCase() == el.name.toLowerCase()) {
@@ -48,22 +74,22 @@ function add() {
         alert('You already want a gift with that name');
         sameN = false;
     } else {
-        var el = document.createElement('li');
+        let el = document.createElement('li');
 
         el.c = Math.floor(100000000 + Math.random() * 900000000);
         updateC(el);
 
         el.name = input;
         localStorage.setItem(el.c + 'Name', el.name);
-        var t = document.createTextNode(input);
+        let t = document.createTextNode(input);
         el.appendChild(t);
         el.classList.add('item');
         document.getElementById('list').appendChild(el);
 
         el.link = '';
         localStorage.setItem(el.c + 'Link', el.link);
-        var span = document.createElement('span');
-        icon = document.createElement('i');
+        let span = document.createElement('span');
+        let icon = document.createElement('i');
         icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
         icon.ariaLabel = 'Go to gift link';
         icon.title = 'Go to gift link';
@@ -74,8 +100,8 @@ function add() {
 
         el.price = '$0';
         localStorage.setItem(el.c + 'Price', el.price);
-        var span = document.createElement('span');
-        var p = document.createTextNode('$' + el.price);
+        span = document.createElement('span');
+        let p = document.createTextNode(el.price);
         span.appendChild(p);
         span.className = 'attr price hidden';
         span.id = el.c + 'Price';
@@ -83,43 +109,48 @@ function add() {
 
         document.getElementById('input').value = '';
 
-        var div = document.createElement('div');
-        div.className = 'opt float-right';
+        let div = document.createElement('div');
+        div.className = 'opt';
 
-        var icon = document.createElement('i');
-        icon.className = 'fa-solid fa-link text-base md:text-xl ml-2 md:ml-3';
+        icon = document.createElement('i');
+        icon.className = 'fa-solid fa-link optBtn';
         icon.ariaLabel = 'Add link to gift';
         icon.title = 'Add link to gift';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-dollar-sign text-base md:text-xl ml-2 md:ml-3';
+        icon.className = 'fa-solid fa-dollar-sign optBtn';
         icon.ariaLabel = 'Add price of gift';
         icon.title = 'Add price of gift';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-tag text-base md:text-xl ml-2 md:ml-3';
+        icon.className = 'fa-solid fa-tag optBtn';
         icon.ariaLabel = 'Add an attribute';
         icon.title = 'Add an attribute';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-pen text-base md:text-xl ml-2 md:ml-3';
+        icon.className = 'fa-solid fa-pen optBtn';
         icon.ariaLabel = 'Edit gift name';
         icon.title = 'Edit gift name';
 
         div.appendChild(icon);
 
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-trash text-base md:text-xl ml-2 md:ml-3';
+        icon.className = 'fa-solid fa-trash optBtn';
         icon.ariaLabel = 'Remove gift';
         icon.title = 'Remove gift';
 
         div.appendChild(icon);
+
+        el.appendChild(div);
+
+        div = document.createElement('div');
+        div.className = 'attrDiv';
 
         el.appendChild(div);
 
@@ -162,17 +193,17 @@ function add() {
 
 //I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
 
-/* var nodeList = document.getElementsByClassName('item');
+/* let nodeList = document.getElementsByClassName('item');
 for (i = 0; i < nodeList.length; i++) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.className = 'opt float-right';
 
-    var icon = document.createElement('i');
+    let icon = document.createElement('i');
     icon.className = 'fa-solid fa-link ml-3';
 
     div.appendChild(icon);
 
-    var icon = document.createElement('i');
+    let icon = document.createElement('i');
     icon.className = 'fa-solid fa-dollar-sign ml-3';
 
     div.appendChild(icon);
@@ -185,35 +216,35 @@ for (i = 0; i < nodeList.length; i++) {
     nodeList[i].appendChild(div);
 } */
 
-var link = document.getElementsByClassName('fa-link');
+let link = document.getElementsByClassName('fa-link');
 for (i = 0; i < link.length; i++) {
     link[i].onclick = function () {
         clickLink(this.parentElement.parentElement);
     }
 }
 
-var price = document.getElementsByClassName('fa-dollar-sign');
+let price = document.getElementsByClassName('fa-dollar-sign');
 for (i = 0; i < price.length; i++) {
     price[i].onclick = function () {
         clickPrice(this.parentElement.parentElement);
     }
 }
 
-var tag = document.getElementsByClassName('fa-tag');
+let tag = document.getElementsByClassName('fa-tag');
 for (i = 0; i < tag.length; i++) {
     tag[i].onclick = function () {
         clickTag(this.parentElement.parentElement);
     }
 }
 
-var pen = document.getElementsByClassName('fa-pen');
+let pen = document.getElementsByClassName('fa-pen');
 for (i = 0; i < pen.length; i++) {
     pen[i].onclick = function () {
         clickPen(this.parentElement.parentElement);
     }
 }
 
-var trash = document.getElementsByClassName('fa-trash');
+let trash = document.getElementsByClassName('fa-trash');
 for (i = 0; i < trash.length; i++) {
     trash[i].onclick = function () {
         clickTrash(this.parentElement.parentElement);
@@ -226,7 +257,10 @@ document.querySelector('ul').addEventListener('click', function (event) {
     if (event.target.classList.contains('attr') && event.target.classList.contains('price')) {
         event.target.classList.add('hidden');
         el.price = '$0';
+        document.getElementById(el.c + 'Price').innerText = el.price;
         localStorage.setItem(el.c + 'Price', el.price);
+
+        updateFP();
 
     } else if (event.target.classList.contains('goto')) {
         el = event.target.parentElement.parentElement;
@@ -239,6 +273,9 @@ document.querySelector('ul').addEventListener('click', function (event) {
 
     } else if (event.target.classList.contains('attr')) {
         event.target.remove();
+
+    } else if (event.target.classList.contains('attrDiv')) {
+        event.target.parentElement.classList.toggle('done');
 
     } else if (event.target.classList.contains('item')) {
         el = event.target;
@@ -260,6 +297,7 @@ function clickTrash(el) {
     el.remove();
 
     updateList();
+    updateFP();
 }
 
 function clickPen(el) {
@@ -292,7 +330,7 @@ function clickPen(el) {
             }
         }
 
-        var tag = document.getElementsByClassName('fa-tag');
+        let tag = document.getElementsByClassName('fa-tag');
         for (i = 0; i < tag.length; i++) {
             tag[i].onclick = function () {
                 clickTag(this.parentElement.parentElement);
@@ -321,17 +359,17 @@ function clickTag(el) {
     } else if (entered.length > 20) {
         alert('Attributes can only have a maximum of 20 characters');
     } else {
-
-        var span = document.createElement('span');
-        var p = document.createTextNode(entered);
+        let span = document.createElement('span');
+        let p = document.createTextNode(entered);
         span.appendChild(p);
         span.className = 'attr';
-        el.appendChild(span);
+        el.getElementsByClassName('attrDiv')[0].appendChild(span);
 
         updateC(el);
         updateList();
     }
 }
+
 
 function clickPrice(el) {
     entered = prompt('Enter the price of your gift');
@@ -356,6 +394,8 @@ function clickPrice(el) {
 
         updateC(el);
         updateList();
+
+        updateFP();
     }
 }
 
@@ -364,7 +404,7 @@ function clickLink(el) {
 
     entered = prompt('Enter the link to your gift', el.link);
 
-    var valid = validURL(entered);
+    let valid = validURL(entered);
 
     if (entered == null || entered == '') {
         return;
@@ -374,7 +414,7 @@ function clickLink(el) {
         if (!el.getElementsByClassName('gotospan')[0]) {
             el.link = '';
             localStorage.setItem(el.c + 'Link', el.link);
-            var span = document.createElement('span');
+            let span = document.createElement('span');
             icon = document.createElement('i');
             icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
             icon.ariaLabel = 'Go to gift link';
@@ -408,8 +448,8 @@ function validURL(string) {
     }
 
     // copied from stackoverflow!! https://stackoverflow.com/a/9284473
-    var pattern = new RegExp('(?:(?:(?:https?|ftp):)?\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:[/?#]\\S*)?');
-    return pattern.test(string);
+    const urlPattern = new RegExp('(?:(?:(?:https?|ftp):)?\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:[/?#]\\S*)?');
+    return urlPattern.test(string);
 }
 
 let text = '';
@@ -422,7 +462,7 @@ function share() {
     } else {
         document.getElementById('copyB').classList.remove('invisible');
 
-        for (var i = 0; i < yearnItems.length; i++) {
+        for (let i = 0; i < yearnItems.length; i++) {
             el = yearnItems[i];
 
             localStorage.getItem(el.innerHTML + 'C');

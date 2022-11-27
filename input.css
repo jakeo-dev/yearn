@@ -11,8 +11,12 @@
     @apply line-through decoration-slate-800 decoration-[2.5px];
   }
 
+  .attrDiv {
+    @apply block;
+  }
+
   .attr {
-    @apply inline-flex /* bg-slate-350 rounded-md */ text-base text-gray-600 hover:line-through decoration-slate-700 /* p-1 px-2 */ ml-3;
+    @apply inline-flex /* bg-slate-350 rounded-md */ text-base text-gray-600 hover:line-through decoration-slate-700 /* p-1 px-2 */ mr-3;
   }
 
   .goto {
@@ -20,11 +24,19 @@
   }
 
   .gotospan {
-    @apply hover:decoration-0 decoration-transparent;
+    @apply hover:decoration-0 decoration-transparent ml-3 mr-0;
+  }
+
+  .opt {
+    @apply block text-right md:inline-block md:float-right;
+  }
+
+  .optBtn {
+    @apply text-lg md:text-xl ml-2 md:ml-3;
   }
 
   .price {
-    @apply text-green-700;
+    @apply text-green-700 mx-3;
   }
 
   .fa-link {

@@ -539,8 +539,12 @@ video {
   text-decoration-thickness: 2.5px;
 }
 
+.attrDiv {
+  display: block;
+}
+
 .attr {
-  margin-left: 0.75rem;
+  margin-right: 0.75rem;
   display: inline-flex;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -566,6 +570,8 @@ video {
 }
 
 .gotospan {
+  margin-left: 0.75rem;
+  margin-right: 0px;
   text-decoration-color: transparent;
 }
 
@@ -573,7 +579,35 @@ video {
   text-decoration-thickness: 0px;
 }
 
+.opt {
+  display: block;
+  text-align: right;
+}
+
+@media (min-width: 768px) {
+  .opt {
+    float: right;
+    display: inline-block;
+  }
+}
+
+.optBtn {
+  margin-left: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .optBtn {
+    margin-left: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
 .price {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
 }
@@ -699,10 +733,6 @@ video {
 
 .mb-3 {
   margin-bottom: 0.75rem;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
 }
 
 .ml-3 {
@@ -942,17 +972,6 @@ video {
 .hover\:text-blue-600:hover {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
-}
-
-@media (min-width: 768px) {
-  .md\:ml-3 {
-    margin-left: 0.75rem;
-  }
-
-  .md\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
 }
 
 @media (min-width: 1024px) {
