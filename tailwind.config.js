@@ -8,7 +8,8 @@ module.exports = {
       },
 
       fontFamily: {
-        'LexendDeca': ['Lexend Deca', 'sans-serif']
+        'LexendDeca': ['Lexend Deca', 'sans-serif'],
+        'Aclonica': ['Aclonica', 'sans-serif']
       }
     },
   },

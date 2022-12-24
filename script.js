@@ -1,5 +1,4 @@
-//console.log('v1.0.10');
-console.log('whats new:\n • Price of all gifts combined is now shown above list\n • Mobile improvements and fixes');
+console.log('whats new:\n • Shows confirmation before deleting items');
 
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -294,7 +293,9 @@ document.body.onkeyup = function (event) {
 }
 
 function clickTrash(el) {
-    el.remove();
+    if (confirm('Are you sure you want to remove your gift called \"' + el.name + '\"?')) {
+        el.remove();
+    }
 
     updateList();
     updateFP();

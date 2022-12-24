@@ -4,11 +4,11 @@
 
 @layer components {
   .item {
-    @apply text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-[0.875rem] mb-3;
+    @apply text-xl /* hover:line-through decoration-slate-500 */ border-2 border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-[0.9rem] mb-3;
   }
 
   .done {
-    @apply line-through decoration-slate-800 decoration-[2.5px];
+    @apply line-through decoration-slate-800 decoration-2;
   }
 
   .attrDiv {
