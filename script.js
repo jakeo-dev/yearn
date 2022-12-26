@@ -149,7 +149,7 @@ function add() {
         el.appendChild(div);
 
         div = document.createElement('div');
-        div.className = 'attrDiv';
+        div.className = 'attrDiv hidden';
 
         el.appendChild(div);
 
@@ -365,6 +365,7 @@ function clickTag(el) {
         span.appendChild(p);
         span.className = 'attr';
         el.getElementsByClassName('attrDiv')[0].appendChild(span);
+        el.getElementsByClassName('attrDiv')[0].classList.remove('hidden');
 
         updateC(el);
         updateList();

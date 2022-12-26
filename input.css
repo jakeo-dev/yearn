@@ -12,11 +12,11 @@
   }
 
   .attrDiv {
-    @apply block;
+    @apply block mt-1;
   }
 
   .attr {
-    @apply inline-flex /* bg-slate-350 rounded-md */ text-base text-gray-600 hover:line-through decoration-slate-700 /* p-1 px-2 */ mr-3;
+    @apply inline-flex /* bg-slate-350 rounded-md */ text-base bg-gray-600 rounded-md text-slate-200 px-2 hover:line-through decoration-slate-700 decoration-2 /* p-1 px-2 */ mr-3 mt-2;
   }
 
   .goto {
@@ -24,7 +24,7 @@
   }
 
   .gotospan {
-    @apply hover:decoration-0 decoration-transparent ml-3 mr-0;
+    @apply bg-transparent hover:decoration-0 decoration-transparent p-0 m-0 ml-3;
   }
 
   .opt {
@@ -36,7 +36,7 @@
   }
 
   .price {
-    @apply text-green-700 mx-3;
+    @apply bg-green-700 rounded-md text-slate-200 px-2 m-0 ml-3;
   }
 
   .fa-link {
