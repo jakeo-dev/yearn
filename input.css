@@ -4,7 +4,7 @@
 
 @layer components {
   .item {
-    @apply text-xl /* hover:line-through decoration-slate-500 */ border-2 border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-[0.9rem] mb-3;
+    @apply text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-slate-300 rounded-md hover:bg-slate-300 transition-all cursor-pointer p-4 mb-3;
   }
 
   .done {
@@ -16,7 +16,7 @@
   }
 
   .attr {
-    @apply inline-flex /* bg-slate-350 rounded-md */ text-base text-gray-600 hover:line-through decoration-slate-700 /* p-1 px-2 */ mr-3;
+    @apply inline-flex text-base text-gray-600 hover:line-through decoration-slate-700 decoration-2 mr-3;
   }
 
   .goto {
@@ -36,7 +36,7 @@
   }
 
   .price {
-    @apply text-green-700 mx-3;
+    @apply text-green-700 ml-3;
   }
 
   .fa-link {
