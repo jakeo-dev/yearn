@@ -2,7 +2,7 @@ console.log('whats new:\n • Shows confirmation before deleting items');
 
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'USD'
 });
 
 document.getElementById('list').innerHTML = localStorage.getItem('yearnList');
@@ -74,6 +74,7 @@ function add() {
         sameN = false;
     } else {
         let el = document.createElement('li');
+        el.tabIndex = 0;
 
         el.c = Math.floor(100000000 + Math.random() * 900000000);
         updateC(el);
@@ -94,7 +95,14 @@ function add() {
         icon.title = 'Go to gift link';
         span.appendChild(icon);
         span.className = 'attr gotospan hidden';
+
+        console.log(el.c);
+        console.log(el.c + 'Link');
+
         span.id = el.c + 'Link';
+
+        console.log(span.id);
+
         el.appendChild(span);
 
         el.price = '$0';
@@ -111,40 +119,55 @@ function add() {
         let div = document.createElement('div');
         div.className = 'opt';
 
+        let btn = document.createElement('button');
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-link optBtn';
-        icon.ariaLabel = 'Add link to gift';
-        icon.title = 'Add link to gift';
+        icon.className = 'fa-solid fa-link';
+        btn.className = 'optBtn link';
+        btn.ariaLabel = 'Add link to gift';
+        btn.title = 'Add link to gift';
 
-        div.appendChild(icon);
+        btn.appendChild(icon);
+        div.appendChild(btn);
 
+        btn = document.createElement('button');
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-dollar-sign optBtn';
-        icon.ariaLabel = 'Add price of gift';
-        icon.title = 'Add price of gift';
+        icon.className = 'fa-solid fa-dollar-sign';
+        btn.className = 'optBtn dollar-sign';
+        btn.ariaLabel = 'Add price of gift';
+        btn.title = 'Add price of gift';
 
-        div.appendChild(icon);
+        btn.appendChild(icon);
+        div.appendChild(btn);
 
+        btn = document.createElement('button');
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-tag optBtn';
-        icon.ariaLabel = 'Add an attribute';
-        icon.title = 'Add an attribute';
+        icon.className = 'fa-solid fa-tag';
+        btn.className = 'optBtn tag';
+        btn.ariaLabel = 'Add an attribute';
+        btn.title = 'Add an attribute';
 
-        div.appendChild(icon);
+        btn.appendChild(icon);
+        div.appendChild(btn);
 
+        btn = document.createElement('button');
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-pen optBtn';
-        icon.ariaLabel = 'Edit gift name';
-        icon.title = 'Edit gift name';
+        icon.className = 'fa-solid fa-pen';
+        btn.className = 'optBtn pen';
+        btn.ariaLabel = 'Edit gift name';
+        btn.title = 'Edit gift name';
 
-        div.appendChild(icon);
+        btn.appendChild(icon);
+        div.appendChild(btn);
 
+        btn = document.createElement('button');
         icon = document.createElement('i');
-        icon.className = 'fa-solid fa-trash optBtn';
-        icon.ariaLabel = 'Remove gift';
-        icon.title = 'Remove gift';
+        icon.className = 'fa-solid fa-trash';
+        btn.className = 'optBtn trash';
+        btn.ariaLabel = 'Remove gift';
+        btn.title = 'Remove gift';
 
-        div.appendChild(icon);
+        btn.appendChild(icon);
+        div.appendChild(btn);
 
         el.appendChild(div);
 
@@ -156,10 +179,20 @@ function add() {
         updateC(el);
         updateList();
 
+        let link = document.getElementsByClassName('link');
+        if (link.length < 1) {
+            link = document.getElementsByClassName('fa-link');
+        }
+
         for (i = 0; i < link.length; i++) {
             link[i].onclick = function () {
                 clickLink(this.parentElement.parentElement);
             }
+        }
+
+        let price = document.getElementsByClassName('dollar-sign');
+        if (price.length < 1) {
+            price = document.getElementsByClassName('fa-dollar-sign');
         }
 
         for (i = 0; i < price.length; i++) {
@@ -168,16 +201,31 @@ function add() {
             }
         }
 
+        let tag = document.getElementsByClassName('tag');
+        if (tag.length < 1) {
+            tag = document.getElementsByClassName('fa-tag');
+        }
+
         for (i = 0; i < tag.length; i++) {
             tag[i].onclick = function () {
                 clickTag(this.parentElement.parentElement);
             }
         }
 
+        let pen = document.getElementsByClassName('pen');
+        if (pen.length < 1) {
+            pen = document.getElementsByClassName('fa-pen');
+        }
+
         for (i = 0; i < pen.length; i++) {
             pen[i].onclick = function () {
                 clickPen(this.parentElement.parentElement);
             }
+        }
+
+        let trash = document.getElementsByClassName('trash');
+        if (trash.length < 1) {
+            trash = document.getElementsByClassName('fa-trash');
         }
 
         for (i = 0; i < trash.length; i++) {
@@ -190,7 +238,7 @@ function add() {
 
 // appends trash and link button to each list item
 
-//I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
+// I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
 
 /* let nodeList = document.getElementsByClassName('item');
 for (i = 0; i < nodeList.length; i++) {
@@ -215,35 +263,55 @@ for (i = 0; i < nodeList.length; i++) {
     nodeList[i].appendChild(div);
 } */
 
-let link = document.getElementsByClassName('fa-link');
+let link = document.getElementsByClassName('link');
+if (link.length < 1) {
+    link = document.getElementsByClassName('fa-link');
+}
+
 for (i = 0; i < link.length; i++) {
     link[i].onclick = function () {
         clickLink(this.parentElement.parentElement);
     }
 }
 
-let price = document.getElementsByClassName('fa-dollar-sign');
+let price = document.getElementsByClassName('dollar-sign');
+if (price.length < 1) {
+    price = document.getElementsByClassName('fa-dollar-sign');
+}
+
 for (i = 0; i < price.length; i++) {
     price[i].onclick = function () {
         clickPrice(this.parentElement.parentElement);
     }
 }
 
-let tag = document.getElementsByClassName('fa-tag');
+let tag = document.getElementsByClassName('tag');
+if (tag.length < 1) {
+    tag = document.getElementsByClassName('fa-tag');
+}
+
 for (i = 0; i < tag.length; i++) {
     tag[i].onclick = function () {
         clickTag(this.parentElement.parentElement);
     }
 }
 
-let pen = document.getElementsByClassName('fa-pen');
+let pen = document.getElementsByClassName('pen');
+if (pen.length < 1) {
+    pen = document.getElementsByClassName('fa-pen');
+}
+
 for (i = 0; i < pen.length; i++) {
     pen[i].onclick = function () {
         clickPen(this.parentElement.parentElement);
     }
 }
 
-let trash = document.getElementsByClassName('fa-trash');
+let trash = document.getElementsByClassName('trash');
+if (trash.length < 1) {
+    trash = document.getElementsByClassName('fa-trash');
+}
+
 for (i = 0; i < trash.length; i++) {
     trash[i].onclick = function () {
         clickTrash(this.parentElement.parentElement);
@@ -293,7 +361,7 @@ document.body.onkeyup = function (event) {
 }
 
 function clickTrash(el) {
-    if (confirm('Are you sure you want to remove your gift called \"' + el.name + '\"?')) {
+    if (confirm('Are you sure you want to remove \"' + el.name + '\"?')) {
         el.remove();
     }
 
@@ -319,10 +387,20 @@ function clickPen(el) {
         updateC(el);
         updateList();
 
+        let link = document.getElementsByClassName('link');
+        if (link.length < 1) {
+            link = document.getElementsByClassName('fa-link');
+        }
+
         for (i = 0; i < link.length; i++) {
             link[i].onclick = function () {
                 clickLink(this.parentElement.parentElement);
             }
+        }
+
+        let price = document.getElementsByClassName('dollar-sign');
+        if (price.length < 1) {
+            price = document.getElementsByClassName('fa-dollar-sign');
         }
 
         for (i = 0; i < price.length; i++) {
@@ -331,17 +409,31 @@ function clickPen(el) {
             }
         }
 
-        let tag = document.getElementsByClassName('fa-tag');
+        let tag = document.getElementsByClassName('tag');
+        if (tag.length < 1) {
+            tag = document.getElementsByClassName('fa-tag');
+        }
+
         for (i = 0; i < tag.length; i++) {
             tag[i].onclick = function () {
                 clickTag(this.parentElement.parentElement);
             }
         }
 
+        let pen = document.getElementsByClassName('pen');
+        if (pen.length < 1) {
+            pen = document.getElementsByClassName('fa-pen');
+        }
+
         for (i = 0; i < pen.length; i++) {
             pen[i].onclick = function () {
                 clickPen(this.parentElement.parentElement);
             }
+        }
+
+        let trash = document.getElementsByClassName('trash');
+        if (trash.length < 1) {
+            trash = document.getElementsByClassName('fa-trash');
         }
 
         for (i = 0; i < trash.length; i++) {

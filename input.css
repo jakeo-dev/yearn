@@ -20,7 +20,7 @@
   }
 
   .goto {
-    @apply text-blue-700 hover:text-blue-800 hover:decoration-0 decoration-transparent;
+    @apply text-blue-700 hover:text-blue-800 hover:decoration-0 decoration-transparent transition-all;
   }
 
   .gotospan {
@@ -38,6 +38,36 @@
   .price {
     @apply text-green-700 ml-3;
   }
+
+  .link {
+    @apply hover:text-blue-700 transition-all;
+  }
+
+  .dollar-sign {
+    @apply hover:text-green-700 transition-all;
+  }
+
+  .tag {
+    @apply hover:text-yellow-600 transition-all;
+  }
+
+  .pen {
+    @apply hover:text-slate-500 transition-all;
+  }
+
+  .trash {
+    @apply hover:text-red-600 transition-all;
+  }
+
+  .fadeIn {
+    @apply invisible opacity-0 transition-all;
+  }
+
+  .fadeOut {
+    @apply visible opacity-100 transition-all;
+  }
+
+  /***************************/
 
   .fa-link {
     @apply hover:text-blue-700 transition-all;
@@ -57,13 +87,5 @@
 
   .fa-trash {
     @apply hover:text-red-600 transition-all;
-  }
-
-  .fadeIn {
-    @apply invisible opacity-0 transition-all;
-  }
-
-  .fadeOut {
-    @apply visible opacity-100 transition-all;
   }
 }
