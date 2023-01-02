@@ -95,14 +95,7 @@ function add() {
         icon.title = 'Go to gift link';
         span.appendChild(icon);
         span.className = 'attr gotospan hidden';
-
-        console.log(el.c);
-        console.log(el.c + 'Link');
-
         span.id = el.c + 'Link';
-
-        console.log(span.id);
-
         el.appendChild(span);
 
         el.price = '$0';
