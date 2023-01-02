@@ -1,4 +1,4 @@
-console.log('whats new:\n • Shows confirmation before deleting items');
+console.log('whats new:\n • Accessibility improvements & fixes');
 
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -88,31 +88,31 @@ function add() {
 
         el.link = '';
         localStorage.setItem(el.c + 'Link', el.link);
-        let span = document.createElement('span');
+        let btn = document.createElement('button');
         let icon = document.createElement('i');
         icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
         icon.ariaLabel = 'Go to gift link';
         icon.title = 'Go to gift link';
-        span.appendChild(icon);
-        span.className = 'attr gotospan hidden';
-        span.id = el.c + 'Link';
-        el.appendChild(span);
+        btn.appendChild(icon);
+        btn.className = 'attr gotospan hidden';
+        btn.id = el.c + 'Link';
+        el.appendChild(btn);
 
         el.price = '$0';
         localStorage.setItem(el.c + 'Price', el.price);
-        span = document.createElement('span');
+        btn = document.createElement('button');
         let p = document.createTextNode(el.price);
-        span.appendChild(p);
-        span.className = 'attr price hidden';
-        span.id = el.c + 'Price';
-        el.appendChild(span);
+        btn.appendChild(p);
+        btn.className = 'attr price hidden';
+        btn.id = el.c + 'Price';
+        el.appendChild(btn);
 
         document.getElementById('input').value = '';
 
         let div = document.createElement('div');
         div.className = 'opt';
 
-        let btn = document.createElement('button');
+        btn = document.createElement('button');
         icon = document.createElement('i');
         icon.className = 'fa-solid fa-link';
         btn.className = 'optBtn link';
@@ -445,11 +445,11 @@ function clickTag(el) {
     } else if (entered.length > 20) {
         alert('Attributes can only have a maximum of 20 characters');
     } else {
-        let span = document.createElement('span');
+        let btn = document.createElement('button');
         let p = document.createTextNode(entered);
-        span.appendChild(p);
-        span.className = 'attr';
-        el.getElementsByClassName('attrDiv')[0].appendChild(span);
+        btn.appendChild(p);
+        btn.className = 'attr';
+        el.getElementsByClassName('attrDiv')[0].appendChild(btn);
 
         updateC(el);
         updateList();
@@ -466,7 +466,7 @@ function clickPrice(el) {
         alert('Enter a valid number');
     } else if (entered <= 0) {
         alert('Enter a higher price');
-    } else if (entered > 9999999999) {
+    } else if (entered > 999999) {
         alert('Enter a lower price');
     } else {
         if (el.getElementsByClassName('price')[0].classList.contains('hidden')) {
@@ -500,15 +500,15 @@ function clickLink(el) {
         if (!el.getElementsByClassName('gotospan')[0]) {
             el.link = '';
             localStorage.setItem(el.c + 'Link', el.link);
-            let span = document.createElement('span');
+            let btn = document.createElement('button');
             icon = document.createElement('i');
             icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
             icon.ariaLabel = 'Go to gift link';
             icon.title = 'Go to gift link';
-            span.appendChild(icon);
-            span.className = 'attr gotospan hidden';
-            span.id = el.c + 'Link';
-            el.appendChild(span);
+            btn.appendChild(icon);
+            btn.className = 'attr gotospan hidden';
+            btn.id = el.c + 'Link';
+            el.appendChild(btn);
         }
 
         if (el.getElementsByClassName('gotospan')[0].classList.contains('hidden')) {

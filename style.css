@@ -516,6 +516,7 @@ video {
 .item {
   margin-bottom: 0.75rem;
   cursor: pointer;
+  overflow-wrap: break-word;
   border-radius: 0.375rem;
   border-width: 2.5px;
   --tw-border-opacity: 1;
