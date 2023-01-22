@@ -4,7 +4,7 @@
 
 @layer components {
   .item {
-    @apply text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-b-0 last:border-b-2 first:rounded-t-md last:rounded-b-md border-slate-300 hover:bg-slate-300 break-words transition-all cursor-pointer p-4;
+    @apply relative text-xl /* hover:line-through decoration-slate-500 */ border-[2.5px] border-b-0 last:border-b-2 first:rounded-t-md last:rounded-b-md border-slate-300 hover:bg-slate-300 break-words transition-all cursor-pointer p-4;
   }
 
   .done {
@@ -28,7 +28,7 @@
   }
 
   .opt {
-    @apply block text-right md:inline-block md:float-right;
+    @apply block absolute top-4 right-4 text-right;
   }
 
   .optBtn {
