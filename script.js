@@ -1,4 +1,4 @@
-console.log('whats new:\n • Accessibility improvements & fixes');
+// console.log('whats new:\n • Accessibility improvements & fixes');
 
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
