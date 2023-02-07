@@ -4,7 +4,7 @@
 
 @layer components {
   .item {
-    @apply relative text-xl odd:bg-slate-200 decoration-slate-800 decoration-2 border-[2.5px] border-b-0 last:border-b-[2.5px] first:rounded-t-md last:rounded-b-md border-slate-300 hover:bg-slate-300 break-words transition-all cursor-pointer p-4;
+    @apply relative text-xl odd:bg-slate-200 decoration-slate-800 decoration-2 border-[2.5px] border-b-0 last:border-b-[2.5px] first:rounded-t-md last:rounded-b-md border-slate-300 hover:bg-slate-300 break-words transition-all cursor-pointer p-3.5;
   }
 
   .done {
@@ -28,7 +28,7 @@
   }
 
   .opt {
-    @apply block absolute top-4 right-4 text-right;
+    @apply block absolute top-[0.9rem] right-4 text-right text-slate-600;
   }
 
   .optBtn {
@@ -36,27 +36,27 @@
   }
 
   .price {
-    @apply text-green-700 ml-3;
+    @apply text-sm bg-green-700 text-slate-100 rounded-md px-1.5 ml-3;
   }
 
   .link {
-    @apply hover:text-blue-700 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .dollar-sign {
-    @apply hover:text-green-700 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .tag {
-    @apply hover:text-yellow-600 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .pen {
-    @apply hover:text-slate-500 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .trash {
-    @apply hover:text-red-600 transition-all;
+    @apply hover:text-red-600 active:text-red-700 transition-all;
   }
 
   .fadeIn {
@@ -70,22 +70,26 @@
   /***************************/
 
   .fa-link {
-    @apply hover:text-blue-700 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .fa-dollar-sign {
-    @apply hover:text-green-700 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .fa-tag {
-    @apply hover:text-yellow-600 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .fa-pen {
-    @apply hover:text-slate-500 transition-all;
+    @apply hover:text-slate-500 active:text-slate-600 transition-all;
   }
 
   .fa-trash {
-    @apply hover:text-red-600 transition-all;
+    @apply hover:text-red-600 active:text-red-700 transition-all;
   }
+}
+
+.item:hover > .opt {
+  @apply text-slate-900;
 }

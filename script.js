@@ -56,22 +56,10 @@ function updateFP() {
 }
 
 function add() {
-    let sameN = false;
     let input = document.getElementById('input').value.trim();
-
-    for (let i = 0; i < yearnItems.length; i++) {
-        el = yearnItems[i];
-
-        if (input.toLowerCase() == el.name.toLowerCase()) {
-            sameN = true;
-        }
-    }
 
     if (input === '') {
         alert('Enter a gift');
-    } else if (sameN) {
-        alert('You already want a gift with that name');
-        sameN = false;
     } else {
         let el = document.createElement('li');
         el.tabIndex = 0;
@@ -586,6 +574,8 @@ function share() {
 
     document.getElementById('modal').classList.remove('fadeIn');
     document.getElementById('modal').classList.add('fadeOut');
+
+    document.getElementsByTagName('body')[0].classList.add('overflow-hidden');
 }
 
 function copy() {
@@ -602,6 +592,7 @@ window.onclick = function (event) {
 function hide() {
     document.getElementById('modal').classList.add('fadeIn');
     document.getElementById('modal').classList.remove('fadeOut');
+    document.getElementsByTagName('body')[0].classList.remove('overflow-hidden');
     document.getElementById('copyB').innerText = 'Copy';
     text = '';
 }
