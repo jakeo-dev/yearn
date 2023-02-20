@@ -10,19 +10,13 @@ let yearnItems = document.getElementsByTagName('li');
 for (let i = 0; i < yearnItems.length; i++) {
     el = yearnItems[i];
 
-    el.id = localStorage.getItem(el.innerHTML + 'C');
-
-    if (localStorage.getItem(el.id + 'Name') !== null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
-        el.name = localStorage.getItem(el.id + 'Name');
-    }
-
     el.price = localStorage.getItem(el.id + 'Price');
 }
 
 updateFP();
 updateAllItems();
 
-function updateList() { // call when anything in list is updated
+function saveList() { // call when anything in list is updated
     localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
 }
 
@@ -151,7 +145,7 @@ function add() {
 
         el.appendChild(div);
 
-        updateList();
+        saveList();
 
         let link = document.getElementsByClassName('link');
         for (i = 0; i < link.length; i++) {
@@ -189,33 +183,6 @@ function add() {
         }
     }
 }
-
-// appends trash and link button to each list item
-
-// I DONT THINK THIS IS NECESSARY, ITS FOR WHEN THERE ARE ALREADY ELEMENTS IN THE LIST, NOT FOR ONES ADDED BY USERS
-
-/* let nodeList = document.getElementsByClassName('item');
-for (i = 0; i < nodeList.length; i++) {
-    let div = document.createElement('div');
-    div.className = 'opt float-right';
-
-    let icon = document.createElement('i');
-    icon.className = 'fa-solid fa-link ml-3';
-
-    div.appendChild(icon);
-
-    let icon = document.createElement('i');
-    icon.className = 'fa-solid fa-dollar-sign ml-3';
-
-    div.appendChild(icon);
-
-    icon = document.createElement('i');
-    icon.className = 'fa-solid fa-trash ml-3';
-
-    div.appendChild(icon);
-
-    nodeList[i].appendChild(div);
-} */
 
 let link = document.getElementsByClassName('link');
 for (i = 0; i < link.length; i++) {
@@ -283,7 +250,7 @@ document.querySelector('ul').addEventListener('click', function (event) {
         event.target.classList.toggle('done');
     }
 
-    updateList();
+    saveList();
 
 }, false);
 
@@ -298,7 +265,7 @@ function clickTrash(el) {
         el.remove();
     }
 
-    updateList();
+    saveList();
     updateFP();
 }
 
@@ -308,16 +275,19 @@ function clickPen(el) {
     if (entered == null || entered == '') {
         return;
     } else {
-        if (localStorage.getItem(el.id + 'Name') !== null) {
-            el.name = localStorage.getItem(el.id + 'Name');
-        }
+        el.name = localStorage.getItem(el.id + 'Name');
+
+        console.log(el);
+        //console.log(el.name);
 
         el.innerHTML = el.innerHTML.replace(el.name, entered);
         el.name = entered;
 
         localStorage.setItem(el.id + 'Name', el.name);
 
-        updateList();
+        //console.log(localStorage.getItem(el.id + 'Name'));
+
+        saveList();
 
         let link = document.getElementsByClassName('link');
         for (i = 0; i < link.length; i++) {
@@ -370,7 +340,7 @@ function clickTag(el) {
         btn.className = 'attr';
         el.getElementsByClassName('attrDiv')[0].appendChild(btn);
 
-        updateList();
+        saveList();
     }
 }
 
@@ -396,7 +366,7 @@ function clickPrice(el) {
         document.getElementById(el.id + 'Price').innerText = el.price;
         localStorage.setItem(el.id + 'Price', el.price);
 
-        updateList();
+        saveList();
 
         updateFP();
     }
@@ -440,7 +410,7 @@ function clickLink(el) {
 
         localStorage.setItem(el.id + 'Link', el.link);
 
-        updateList();
+        saveList();
     }
 }
 
