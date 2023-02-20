@@ -65,7 +65,7 @@ function add() {
         localStorage.setItem(el.id + 'Name', el.name);
         let t = document.createTextNode(input);
         el.appendChild(t);
-        el.idlassList.add('item');
+        el.classList.add('item');
         document.getElementById('list').appendChild(el);
 
         el.link = '';
