@@ -1,5 +1,3 @@
-// console.log('whats new:\n • Accessibility improvements & fixes');
-
 let formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -12,20 +10,17 @@ let yearnItems = document.getElementsByTagName('li');
 for (let i = 0; i < yearnItems.length; i++) {
     el = yearnItems[i];
 
-    el.c = localStorage.getItem(el.innerHTML + 'C');
+    el.id = localStorage.getItem(el.innerHTML + 'C');
 
-    if (localStorage.getItem(el.c + 'Name') !== null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
-        el.name = localStorage.getItem(el.c + 'Name');
+    if (localStorage.getItem(el.id + 'Name') !== null) { // this is just a backup to set el.name for any element that doesnt have it for some reason, may be unnecessary
+        el.name = localStorage.getItem(el.id + 'Name');
     }
 
-    el.price = localStorage.getItem(el.c + 'Price');
+    el.price = localStorage.getItem(el.id + 'Price');
 }
 
 updateFP();
-
-function updateC(el) { // call when html of item is updated
-    localStorage.setItem(el.innerHTML + 'C', el.c);
-}
+updateAllItems();
 
 function updateList() { // call when anything in list is updated
     localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
@@ -64,18 +59,17 @@ function add() {
         let el = document.createElement('li');
         el.tabIndex = 0;
 
-        el.c = Math.floor(100000000 + Math.random() * 900000000);
-        updateC(el);
+        el.id = Math.floor(100000000 + Math.random() * 900000000);
 
         el.name = input;
-        localStorage.setItem(el.c + 'Name', el.name);
+        localStorage.setItem(el.id + 'Name', el.name);
         let t = document.createTextNode(input);
         el.appendChild(t);
-        el.classList.add('item');
+        el.idlassList.add('item');
         document.getElementById('list').appendChild(el);
 
         el.link = '';
-        localStorage.setItem(el.c + 'Link', el.link);
+        localStorage.setItem(el.id + 'Link', el.link);
         let btn = document.createElement('button');
         let icon = document.createElement('i');
         icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
@@ -83,16 +77,16 @@ function add() {
         icon.title = 'Go to gift link';
         btn.appendChild(icon);
         btn.className = 'attr gotospan hidden';
-        btn.id = el.c + 'Link';
+        btn.id = el.id + 'Link';
         el.appendChild(btn);
 
         el.price = '$0';
-        localStorage.setItem(el.c + 'Price', el.price);
+        localStorage.setItem(el.id + 'Price', el.price);
         btn = document.createElement('button');
         let p = document.createTextNode(el.price);
         btn.appendChild(p);
         btn.className = 'attr price hidden';
-        btn.id = el.c + 'Price';
+        btn.id = el.id + 'Price';
         el.appendChild(btn);
 
         document.getElementById('input').value = '';
@@ -157,14 +151,9 @@ function add() {
 
         el.appendChild(div);
 
-        updateC(el);
         updateList();
 
         let link = document.getElementsByClassName('link');
-        if (link.length < 1) {
-            link = document.getElementsByClassName('fa-link');
-        }
-
         for (i = 0; i < link.length; i++) {
             link[i].onclick = function () {
                 clickLink(this.parentElement.parentElement);
@@ -172,10 +161,6 @@ function add() {
         }
 
         let price = document.getElementsByClassName('dollar-sign');
-        if (price.length < 1) {
-            price = document.getElementsByClassName('fa-dollar-sign');
-        }
-
         for (i = 0; i < price.length; i++) {
             price[i].onclick = function () {
                 clickPrice(this.parentElement.parentElement);
@@ -183,10 +168,6 @@ function add() {
         }
 
         let tag = document.getElementsByClassName('tag');
-        if (tag.length < 1) {
-            tag = document.getElementsByClassName('fa-tag');
-        }
-
         for (i = 0; i < tag.length; i++) {
             tag[i].onclick = function () {
                 clickTag(this.parentElement.parentElement);
@@ -194,10 +175,6 @@ function add() {
         }
 
         let pen = document.getElementsByClassName('pen');
-        if (pen.length < 1) {
-            pen = document.getElementsByClassName('fa-pen');
-        }
-
         for (i = 0; i < pen.length; i++) {
             pen[i].onclick = function () {
                 clickPen(this.parentElement.parentElement);
@@ -205,10 +182,6 @@ function add() {
         }
 
         let trash = document.getElementsByClassName('trash');
-        if (trash.length < 1) {
-            trash = document.getElementsByClassName('fa-trash');
-        }
-
         for (i = 0; i < trash.length; i++) {
             trash[i].onclick = function () {
                 clickTrash(this.parentElement.parentElement);
@@ -245,10 +218,6 @@ for (i = 0; i < nodeList.length; i++) {
 } */
 
 let link = document.getElementsByClassName('link');
-if (link.length < 1) {
-    link = document.getElementsByClassName('fa-link');
-}
-
 for (i = 0; i < link.length; i++) {
     link[i].onclick = function () {
         clickLink(this.parentElement.parentElement);
@@ -256,10 +225,6 @@ for (i = 0; i < link.length; i++) {
 }
 
 let price = document.getElementsByClassName('dollar-sign');
-if (price.length < 1) {
-    price = document.getElementsByClassName('fa-dollar-sign');
-}
-
 for (i = 0; i < price.length; i++) {
     price[i].onclick = function () {
         clickPrice(this.parentElement.parentElement);
@@ -267,10 +232,6 @@ for (i = 0; i < price.length; i++) {
 }
 
 let tag = document.getElementsByClassName('tag');
-if (tag.length < 1) {
-    tag = document.getElementsByClassName('fa-tag');
-}
-
 for (i = 0; i < tag.length; i++) {
     tag[i].onclick = function () {
         clickTag(this.parentElement.parentElement);
@@ -278,10 +239,6 @@ for (i = 0; i < tag.length; i++) {
 }
 
 let pen = document.getElementsByClassName('pen');
-if (pen.length < 1) {
-    pen = document.getElementsByClassName('fa-pen');
-}
-
 for (i = 0; i < pen.length; i++) {
     pen[i].onclick = function () {
         clickPen(this.parentElement.parentElement);
@@ -289,10 +246,6 @@ for (i = 0; i < pen.length; i++) {
 }
 
 let trash = document.getElementsByClassName('trash');
-if (trash.length < 1) {
-    trash = document.getElementsByClassName('fa-trash');
-}
-
 for (i = 0; i < trash.length; i++) {
     trash[i].onclick = function () {
         clickTrash(this.parentElement.parentElement);
@@ -305,18 +258,18 @@ document.querySelector('ul').addEventListener('click', function (event) {
     if (event.target.classList.contains('attr') && event.target.classList.contains('price')) {
         event.target.classList.add('hidden');
         el.price = '$0';
-        document.getElementById(el.c + 'Price').innerText = el.price;
-        localStorage.setItem(el.c + 'Price', el.price);
+        document.getElementById(el.id + 'Price').innerText = el.price;
+        localStorage.setItem(el.id + 'Price', el.price);
 
         updateFP();
 
     } else if (event.target.classList.contains('goto')) {
         el = event.target.parentElement.parentElement;
-        el.link = localStorage.getItem(el.c + 'Link');
+        el.link = localStorage.getItem(el.id + 'Link');
         window.open(el.link);
 
     } else if (event.target.classList.contains('gotospan')) {
-        el.link = localStorage.getItem(el.c + 'Link');
+        el.link = localStorage.getItem(el.id + 'Link');
         window.open(el.link);
 
     } else if (event.target.classList.contains('attr')) {
@@ -330,7 +283,6 @@ document.querySelector('ul').addEventListener('click', function (event) {
         event.target.classList.toggle('done');
     }
 
-    updateC(el);
     updateList();
 
 }, false);
@@ -356,23 +308,18 @@ function clickPen(el) {
     if (entered == null || entered == '') {
         return;
     } else {
-        if (localStorage.getItem(el.c + 'Name') !== null) {
-            el.name = localStorage.getItem(el.c + 'Name');
+        if (localStorage.getItem(el.id + 'Name') !== null) {
+            el.name = localStorage.getItem(el.id + 'Name');
         }
 
         el.innerHTML = el.innerHTML.replace(el.name, entered);
         el.name = entered;
 
-        localStorage.setItem(el.c + 'Name', el.name);
+        localStorage.setItem(el.id + 'Name', el.name);
 
-        updateC(el);
         updateList();
 
         let link = document.getElementsByClassName('link');
-        if (link.length < 1) {
-            link = document.getElementsByClassName('fa-link');
-        }
-
         for (i = 0; i < link.length; i++) {
             link[i].onclick = function () {
                 clickLink(this.parentElement.parentElement);
@@ -380,10 +327,6 @@ function clickPen(el) {
         }
 
         let price = document.getElementsByClassName('dollar-sign');
-        if (price.length < 1) {
-            price = document.getElementsByClassName('fa-dollar-sign');
-        }
-
         for (i = 0; i < price.length; i++) {
             price[i].onclick = function () {
                 clickPrice(this.parentElement.parentElement);
@@ -391,10 +334,6 @@ function clickPen(el) {
         }
 
         let tag = document.getElementsByClassName('tag');
-        if (tag.length < 1) {
-            tag = document.getElementsByClassName('fa-tag');
-        }
-
         for (i = 0; i < tag.length; i++) {
             tag[i].onclick = function () {
                 clickTag(this.parentElement.parentElement);
@@ -402,10 +341,6 @@ function clickPen(el) {
         }
 
         let pen = document.getElementsByClassName('pen');
-        if (pen.length < 1) {
-            pen = document.getElementsByClassName('fa-pen');
-        }
-
         for (i = 0; i < pen.length; i++) {
             pen[i].onclick = function () {
                 clickPen(this.parentElement.parentElement);
@@ -413,10 +348,6 @@ function clickPen(el) {
         }
 
         let trash = document.getElementsByClassName('trash');
-        if (trash.length < 1) {
-            trash = document.getElementsByClassName('fa-trash');
-        }
-
         for (i = 0; i < trash.length; i++) {
             trash[i].onclick = function () {
                 clickTrash(this.parentElement.parentElement);
@@ -439,7 +370,6 @@ function clickTag(el) {
         btn.className = 'attr';
         el.getElementsByClassName('attrDiv')[0].appendChild(btn);
 
-        updateC(el);
         updateList();
     }
 }
@@ -463,10 +393,9 @@ function clickPrice(el) {
 
         el.price = formatter.format((Math.round(entered * 100)) / 100);
 
-        document.getElementById(el.c + 'Price').innerText = el.price;
-        localStorage.setItem(el.c + 'Price', el.price);
+        document.getElementById(el.id + 'Price').innerText = el.price;
+        localStorage.setItem(el.id + 'Price', el.price);
 
-        updateC(el);
         updateList();
 
         updateFP();
@@ -474,7 +403,7 @@ function clickPrice(el) {
 }
 
 function clickLink(el) {
-    el.link = localStorage.getItem(el.c + 'Link');
+    el.link = localStorage.getItem(el.id + 'Link');
 
     entered = prompt('Enter the link to your gift', el.link);
 
@@ -487,7 +416,7 @@ function clickLink(el) {
     } else {
         if (!el.getElementsByClassName('gotospan')[0]) {
             el.link = '';
-            localStorage.setItem(el.c + 'Link', el.link);
+            localStorage.setItem(el.id + 'Link', el.link);
             let btn = document.createElement('button');
             icon = document.createElement('i');
             icon.className = 'fa-solid fa-arrow-up-right-from-square goto';
@@ -495,7 +424,7 @@ function clickLink(el) {
             icon.title = 'Go to gift link';
             btn.appendChild(icon);
             btn.className = 'attr gotospan hidden';
-            btn.id = el.c + 'Link';
+            btn.id = el.id + 'Link';
             el.appendChild(btn);
         }
 
@@ -509,9 +438,8 @@ function clickLink(el) {
             el.link = 'https://' + entered;
         }
 
-        localStorage.setItem(el.c + 'Link', el.link);
+        localStorage.setItem(el.id + 'Link', el.link);
 
-        updateC(el);
         updateList();
     }
 }
@@ -525,6 +453,104 @@ function validURL(string) {
     const urlPattern = new RegExp('(?:(?:(?:https?|ftp):)?\\/\\/)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:[/?#]\\S*)?');
     return urlPattern.test(string);
 }
+
+/* document.addEventListener('DOMContentLoaded', (event) => {
+
+    var dragSrcEl = null;
+
+    function handleDragStart(e) {
+        this.style.opacity = '0.4';
+
+        dragSrcEl = this;
+
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+
+        e.dataTransfer.dropEffect = 'move';
+
+        return false;
+    }
+
+    function handleDragEnter(e) {
+        this.classList.add('over');
+    }
+
+    function handleDragLeave(e) {
+        this.classList.remove('over');
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation(); // stops the browser from redirecting.
+        }
+
+        if (dragSrcEl != this) {
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+
+            let link = document.getElementsByClassName('link');
+            for (i = 0; i < link.length; i++) {
+                link[i].onclick = function () {
+                    clickLink(this.parentElement.parentElement);
+                }
+            }
+
+            let price = document.getElementsByClassName('dollar-sign');
+            for (i = 0; i < price.length; i++) {
+                price[i].onclick = function () {
+                    clickPrice(this.parentElement.parentElement);
+                }
+            }
+
+            let tag = document.getElementsByClassName('tag');
+            for (i = 0; i < tag.length; i++) {
+                tag[i].onclick = function () {
+                    clickTag(this.parentElement.parentElement);
+                }
+            }
+
+            let pen = document.getElementsByClassName('pen');
+            for (i = 0; i < pen.length; i++) {
+                pen[i].onclick = function () {
+                    clickPen(this.parentElement.parentElement);
+                }
+            }
+
+            let trash = document.getElementsByClassName('trash');
+            for (i = 0; i < trash.length; i++) {
+                trash[i].onclick = function () {
+                    clickTrash(this.parentElement.parentElement);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    function handleDragEnd(e) {
+        this.style.opacity = '1';
+
+        things.forEach(function (thing) {
+            thing.classList.remove('over');
+        });
+    }
+
+    let things = document.querySelectorAll('.item');
+    things.forEach(function (thing) {
+        thing.addEventListener('dragstart', handleDragStart, false);
+        thing.addEventListener('dragenter', handleDragEnter, false);
+        thing.addEventListener('dragover', handleDragOver, false);
+        thing.addEventListener('dragleave', handleDragLeave, false);
+        thing.addEventListener('drop', handleDrop, false);
+        thing.addEventListener('dragend', handleDragEnd, false);
+    });
+}); */
 
 let text = '';
 
@@ -540,16 +566,16 @@ function share() {
             el = yearnItems[i];
 
             localStorage.getItem(el.innerHTML + 'C');
-            el.shareName = localStorage.getItem(el.c + 'Name');
+            el.shareName = localStorage.getItem(el.id + 'Name');
 
-            if (localStorage.getItem(el.c + 'Price') !== '$0' && localStorage.getItem(el.c + 'Price') !== null && localStorage.getItem(el.c + 'Price') !== undefined && localStorage.getItem(el.c + 'Price') !== '') {
-                el.sharePrice = ' (' + localStorage.getItem(el.c + 'Price') + ')';
+            if (localStorage.getItem(el.id + 'Price') !== '$0' && localStorage.getItem(el.id + 'Price') !== null && localStorage.getItem(el.id + 'Price') !== undefined && localStorage.getItem(el.id + 'Price') !== '') {
+                el.sharePrice = ' (' + localStorage.getItem(el.id + 'Price') + ')';
             } else {
                 el.sharePrice = '';
             }
 
-            if (localStorage.getItem(el.c + 'Link') !== null && localStorage.getItem(el.c + 'Link') !== undefined && localStorage.getItem(el.c + 'Link') !== '') {
-                el.shareLink = localStorage.getItem(el.c + 'Link');
+            if (localStorage.getItem(el.id + 'Link') !== null && localStorage.getItem(el.id + 'Link') !== undefined && localStorage.getItem(el.id + 'Link') !== '') {
+                el.shareLink = localStorage.getItem(el.id + 'Link');
 
                 if (!el.shareLink.startsWith('http')) {
                     el.shareLink = 'https://' + el.shareLink;
@@ -567,13 +593,13 @@ function share() {
             }
         }
 
-        text = text + '\nvia https://yearn.jorch.xyz'
+        text = text + '\nvia https://yearn.jakeo.dev'
 
         document.getElementById('shareList').innerText = text;
     }
 
-    document.getElementById('modal').classList.remove('fadeIn');
-    document.getElementById('modal').classList.add('fadeOut');
+    document.getElementById('shareModal').classList.remove('fadeIn');
+    document.getElementById('shareModal').classList.add('fadeOut');
 
     document.getElementsByTagName('body')[0].classList.add('overflow-hidden');
 }
@@ -583,15 +609,53 @@ function copy() {
     document.getElementById('copyB').innerText = 'Copied!';
 }
 
+function updateAllItems() {
+    currentItems = document.getElementsByClassName('optBtn');
+
+    for (let i = 0; i < currentItems.length; i++) {
+        item = currentItems[i];
+
+        if (item.className.includes('fa-link')) {
+            item.classList.remove('fa-link');
+            item.classList.add('link');
+        } else if (item.className.includes('fa-dollar-sign')) {
+            item.classList.remove('fa-dollar-sign');
+            item.classList.add('dollar-sign');
+        } else if (item.className.includes('fa-tag')) {
+            item.classList.remove('fa-tag');
+            item.classList.add('tag');
+        } else if (item.className.includes('fa-pen')) {
+            item.classList.remove('fa-pen');
+            item.classList.add('pen');
+        } else if (item.className.includes('fa-trash')) {
+            item.classList.remove('fa-trash');
+            item.classList.add('trash');
+        }
+    }
+
+    currentItems = document.getElementsByClassName('item');
+    for (let j = 0; j < currentItems.length; j++) {
+        el = currentItems[j];
+
+        if (el.id == null || el.id == undefined || !el.id) {
+            el.id = el.c;
+        }
+
+        /* if (el.draggable == true) {
+            el.draggable = false;
+        } */
+    }
+}
+
 window.onclick = function (event) {
-    if (event.target == document.getElementById('modal')) {
+    if (event.target == document.getElementById('shareModal')) {
         hide();
     }
 }
 
 function hide() {
-    document.getElementById('modal').classList.add('fadeIn');
-    document.getElementById('modal').classList.remove('fadeOut');
+    document.getElementById('shareModal').classList.add('fadeIn');
+    document.getElementById('shareModal').classList.remove('fadeOut');
     document.getElementsByTagName('body')[0].classList.remove('overflow-hidden');
     document.getElementById('copyB').innerText = 'Copy';
     text = '';

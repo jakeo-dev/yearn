@@ -4,7 +4,7 @@
 
 @layer components {
   .item {
-    @apply relative text-xl odd:bg-slate-200 decoration-slate-800 decoration-2 border-[2.5px] border-b-0 last:border-b-[2.5px] first:rounded-t-md last:rounded-b-md border-slate-300 hover:bg-slate-300 break-words transition-all cursor-pointer p-3.5;
+    @apply relative text-lg odd:bg-gray-200 decoration-gray-800 decoration-2 border-x-[3px] border-b-0 first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300 hover:bg-gray-300 break-words transition-all cursor-pointer p-3 pl-4;
   }
 
   .done {
@@ -16,7 +16,7 @@
   }
 
   .attr {
-    @apply inline-flex text-base text-gray-600 hover:line-through decoration-slate-700 decoration-2 mr-3;
+    @apply inline-flex text-base text-gray-600 hover:line-through decoration-gray-700 decoration-2 mr-3;
   }
 
   .goto {
@@ -28,35 +28,35 @@
   }
 
   .opt {
-    @apply block absolute top-[0.9rem] right-4 text-right text-slate-600;
+    @apply block absolute top-[0.775rem] right-4 text-right text-gray-500;
   }
 
   .optBtn {
-    @apply text-lg md:text-xl ml-2 md:ml-3;
+    @apply text-base md:text-lg ml-2 md:ml-3;
   }
 
   .price {
-    @apply text-sm bg-green-700 text-slate-100 rounded-md px-1.5 ml-3;
+    @apply text-sm bg-green-700 text-gray-100 rounded-md px-1.5 ml-3;
   }
 
   .link {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
+    @apply hover:text-gray-500 active:text-gray-600 transition-all;
   }
 
   .dollar-sign {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
+    @apply hover:text-gray-500 active:text-gray-600 transition-all;
   }
 
   .tag {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
+    @apply hover:text-gray-500 active:text-gray-600 transition-all;
   }
 
   .pen {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
+    @apply hover:text-gray-500 active:text-gray-600 transition-all;
   }
 
   .trash {
-    @apply hover:text-red-600 active:text-red-700 transition-all;
+    @apply hover:text-red-500 active:text-red-600 transition-all;
   }
 
   .fadeIn {
@@ -66,30 +66,8 @@
   .fadeOut {
     @apply visible opacity-100 transition-all;
   }
-
-  /***************************/
-
-  .fa-link {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
-  }
-
-  .fa-dollar-sign {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
-  }
-
-  .fa-tag {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
-  }
-
-  .fa-pen {
-    @apply hover:text-slate-500 active:text-slate-600 transition-all;
-  }
-
-  .fa-trash {
-    @apply hover:text-red-600 active:text-red-700 transition-all;
-  }
 }
 
 .item:hover > .opt {
-  @apply text-slate-900;
+  @apply text-gray-900;
 }
