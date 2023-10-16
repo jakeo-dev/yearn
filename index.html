@@ -17,19 +17,19 @@
 	<link href='https://fonts.googleapis.com/css2?family=Aclonica&family=Lexend+Deca&display=swap' rel='stylesheet'>
 </head>
 
-<body class='bg-gray-100 block text-gray-900 p-6 lg:p-20 lg:px-56 xl:px-80 font-LexendDeca'>
+<body class='bg-gray-100 block text-gray-900 p-6 lg:p-20 lg:px-52 xl:px-80 font-LexendDeca'>
 
 	<div id='shareModal'
 		class='fadeIn bg-black/50 justify-center items-center fixed top-0 left-0 z-30 w-screen h-screen overflow-auto p-4 lg:p-20 lg:px-36 xl:px-96'>
 		<div class='bg-gray-100 text-lg text-gray-900 rounded-md drop-shadow-sm w-full p-9'>
-			<h1 class='text-gray-900 border-2 border-gray-300 rounded-md p-6' id='shareList'>Add items to share
+			<h1 class='text-gray-900 border-2 border-gray-300 rounded-md px-6 py-4' id='shareList'>Add items to share
 				your list</h1>
 			<div class='mt-6'>
 				<button
-					class='border-2 border-gray-300 rounded-md hover:bg-gray-200 active:bg-gray-300 active:border-transparent transition-all cursor-pointer p-2.5 px-3.5'
+					class='border-2 border-gray-300 rounded-md hover:bg-gray-200 active:bg-gray-300 active:border-transparent transition-all cursor-pointer p-2.5 px-4'
 					id='copyB' onclick='copy()'>Copy</button>
 				<button
-					class='border-2 border-gray-300 rounded-md hover:bg-gray-200 active:bg-gray-300 active:border-transparent float-right transition-all cursor-pointer p-2.5 px-3.5'
+					class='border-2 border-gray-300 rounded-md hover:bg-gray-200 active:bg-gray-300 active:border-transparent float-right transition-all cursor-pointer p-2.5 px-4'
 					id='closeB' onclick='hide()'>Close</button>
 			</div>
 		</div>
@@ -38,22 +38,17 @@
 	<!-- <button onclick='localStorage.clear()' class='text-3xl border-4 border-red-500 hover:bg-red-300'>CLEAR
 		EVERYTHING</button> -->
 
-	<div
-		class='flex w-full text-4xl bg-gradient-to-b from-blue-500 to-blue-600 text-gray-200 rounded-md p-5 py-[1.125rem] mb-6'>
-		<div>
-			<h1 class='flex flex-1 justify-start items-center font-extrabold w-full pt-1 pl-1 font-Aclonica'>
-				Yearn</h1>
-			<!-- <h2 class='text-lg mt-1'>Organize everything you yearn for into a simple list</h2> -->
-		</div>
-		<div class='flex flex-1 justify-end items-center w-full'>
-			<button class='hover:text-gray-300 active:text-gray-400 transition-all mr-1' onclick='share()'>
-				<i class='fa-solid fa-share-nodes' aria-label='Share list' title='Share list'></i>
-			</button>
-		</div>
-		<!-- DO NOT USE 'FAS', USE 'FA-SOLID', FAS DOES NOT WORK FOR SOME REASON AND WILL BREAK THE CODE -->
+	<div class='flex text-3xl w-full px-4 mb-4'>
+		<h1
+			class='flex flex-1 justify-start items-center bg-gradient-to-b from-blue-500 to-blue-600 text-transparent bg-clip-text font-extrabold w-full pt-1 pl-1 font-Aclonica'>
+			Yearn</h1>
+		<button class='text-blue-500 hover:text-blue-600 active:text-blue-700 transition-all mr-1' onclick='share()'>
+			<i class='fa-solid fa-share-nodes flex justify-center items-end' aria-label='Share list'
+				title='Share list'></i>
+		</button>
 	</div>
 
-	<div class='text-base mb-3'>
+	<div class='text-base px-1 mb-2'>
 		<h2 id='listPrice'>List Price: </h2>
 	</div>
 
@@ -64,12 +59,12 @@
 	</div>
 
 	<div class='w-full flex sticky'>
-		<div class='flex w-full rounded-md border-blue-500 hover:border-blue-600 transition-all border-[2.5px]'>
-			<input class='bg-transparent w-full text-xl outline-none px-4' id='input'
+		<div class='flex w-full rounded-full border-blue-500 hover:border-blue-600 transition-all border-[2.5px]'>
+			<input class='bg-transparent w-full text-lg outline-none px-5 py-3' id='input'
 				placeholder='What do you yearn for...?' type='text' aria-label='What do you yearn for...?'
 				autocomplete='off'>
 			<button id='add' onclick='add()' title='Add gift'>
-				<i class='fa-solid fa-circle-plus text-blue-500 text-3xl hover:text-blue-600 active:text-blue-700 transition-all p-3 m-0'
+				<i class='fa-solid fa-circle-plus text-3xl text-blue-500 hover:text-blue-600 active:text-blue-700 transition-all px-3 m-0'
 					aria-label='Add gift'></i></button>
 		</div>
 	</div>

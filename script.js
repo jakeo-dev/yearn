@@ -48,7 +48,7 @@ function add() {
     let input = document.getElementById('input').value.trim();
 
     if (input === '') {
-        alert('Enter a gift');
+        alert('Enter something you yearn for');
     } else {
         let el = document.createElement('li');
         el.tabIndex = 0;
@@ -538,25 +538,36 @@ function share() {
             localStorage.getItem(el.innerHTML + 'C');
             el.shareName = localStorage.getItem(el.id + 'Name');
 
+            el.sharePrice = '';
+            el.shareAttrs = '';
+            el.shareLink = '';
+
             if (localStorage.getItem(el.id + 'Price') !== '$0' && localStorage.getItem(el.id + 'Price') !== null && localStorage.getItem(el.id + 'Price') !== undefined && localStorage.getItem(el.id + 'Price') !== '') {
                 el.sharePrice = ' (' + localStorage.getItem(el.id + 'Price') + ')';
-            } else {
-                el.sharePrice = '';
+            }
+
+            if (document.getElementsByClassName('attrDiv')[i].getElementsByClassName('attr').length > 0) {
+                attrs = document.getElementsByClassName('attrDiv')[i].getElementsByClassName('attr');
+                attrThing = '\n';
+                for (let j = 0; j < attrs.length; j++) {
+                    attrThing = attrThing + attrs[j].innerText;
+                    if (j != attrs.length - 1) {
+                        attrThing += ', ';
+                    }
+                }
+
+                el.shareAttrs = attrThing;
             }
 
             if (localStorage.getItem(el.id + 'Link') !== null && localStorage.getItem(el.id + 'Link') !== undefined && localStorage.getItem(el.id + 'Link') !== '') {
                 el.shareLink = localStorage.getItem(el.id + 'Link');
-
                 if (!el.shareLink.startsWith('http')) {
                     el.shareLink = 'https://' + el.shareLink;
                 }
-
                 el.shareLink = '\n' + el.shareLink;
-            } else {
-                el.shareLink = '';
             }
 
-            text = `${text}• ${el.shareName}${el.sharePrice}${el.shareLink}\n`
+            text = `${text}• ${el.shareName}${el.sharePrice}${el.shareAttrs}${el.shareLink}\n`
 
             if (i < yearnItems.length - 1) {
                 text = text + '\n';

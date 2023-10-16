@@ -28,11 +28,11 @@
   }
 
   .opt {
-    @apply block absolute top-[0.775rem] right-4 text-right text-gray-500;
+    @apply block absolute top-[0.775rem] right-4 text-right text-gray-500/60;
   }
 
   .optBtn {
-    @apply text-base md:text-lg ml-2 md:ml-3;
+    @apply text-base md:text-lg hover:text-gray-500 active:text-gray-600 transition-all ml-2 md:ml-3;
   }
 
   .price {
@@ -40,23 +40,23 @@
   }
 
   .link {
-    @apply hover:text-gray-500 active:text-gray-600 transition-all;
+    @apply invisible;
   }
 
   .dollar-sign {
-    @apply hover:text-gray-500 active:text-gray-600 transition-all;
+    @apply invisible;
   }
 
   .tag {
-    @apply hover:text-gray-500 active:text-gray-600 transition-all;
+    @apply invisible;
   }
 
   .pen {
-    @apply hover:text-gray-500 active:text-gray-600 transition-all;
+    @apply visible;
   }
 
   .trash {
-    @apply hover:text-red-500 active:text-red-600 transition-all;
+    @apply visible;
   }
 
   .fadeIn {
@@ -69,5 +69,17 @@
 }
 
 .item:hover > .opt {
-  @apply text-gray-900;
+  @apply text-gray-900 transition-all;
+}
+
+.item:hover .link {
+  @apply visible transition-all;
+}
+
+.item:hover .dollar-sign {
+  @apply visible transition-all;
+}
+
+.item:hover .tag {
+  @apply visible transition-all;
 }
