@@ -854,6 +854,15 @@ video {
   overflow: hidden;
 }
 
+.break-normal {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -970,6 +979,14 @@ video {
 
 .pl-2 {
   padding-left: 0.5rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .font-Aclonica {

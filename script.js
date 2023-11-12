@@ -16,8 +16,24 @@ for (let i = 0; i < yearnItems.length; i++) {
 updateFP();
 updateAllItems();
 
+if (yearnItems.length < 1) {
+    document.getElementById('listOpts').classList.add('hidden');
+    document.getElementById('listOpts').classList.remove('flex');
+} else {
+    document.getElementById('listOpts').classList.remove('hidden');
+    document.getElementById('listOpts').classList.add('flex');
+}
+
 function saveList() { // call when anything in list is updated
     localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
+
+    if (yearnItems.length < 1) {
+        document.getElementById('listOpts').classList.add('hidden');
+        document.getElementById('listOpts').classList.remove('flex');
+    } else {
+        document.getElementById('listOpts').classList.remove('hidden');
+        document.getElementById('listOpts').classList.add('flex');
+    }
 }
 
 function updateFP() {
