@@ -17,10 +17,10 @@
 	<link href='https://fonts.googleapis.com/css2?family=Aclonica&family=Lexend+Deca&display=swap' rel='stylesheet'>
 </head>
 
-<body class='bg-gray-100 block text-gray-900 max-w-4xl p-6 pt-8 md:pt-20 mx-auto font-LexendDeca'>
+<body class='bg-gray-100 block text-gray-900 max-w-3xl px-6 pt-8 pb-16 md:pt-20 md:pb-36 mx-auto font-LexendDeca'>
 
 	<div id='shareModal'
-		class='fadeIn bg-black/50 flex justify-center items-center fixed top-0 left-0 z-30 w-full h-full overflow-auto px-6'>
+		class='fadeIn bg-black/50 flex justify-center items-center fixed top-0 left-0 z-30 w-full h-full overflow-auto px-6 py-12'>
 		<div class='relative bg-gray-100 rounded-lg w-[40rem] mx-auto shadow-sm p-8'>
 			<button class='absolute top-[3.25rem] right-[3.5rem] hover:text-gray-500 transition-all' onclick='hide()'><i
 					class='fa-solid fa-xmark' aria-label='Close' title='Close'></i></button>
@@ -44,7 +44,8 @@
 	<div class='w-full mb-3'>
 		<div id='listOpts' class='flex text-base px-2 mb-2'>
 			<h2 id='listPrice'></h2>
-			<button id='shareListBtn' class='hover:text-blue-600 active:text-blue-700 ml-auto transition-all' onclick='share()'>
+			<button id='shareListBtn' class='hover:text-blue-600 active:text-blue-700 ml-auto transition-all'
+				onclick='share()'>
 				<i class='fa-solid fa-share-nodes mr-1.5' aria-label='Share list' title='Share list'></i>Share list
 			</button>
 		</div>

@@ -4,11 +4,27 @@
 
 @layer components {
   .item {
-    @apply relative text-lg odd:bg-gray-200 decoration-gray-800 decoration-2 border-x-[3px] border-b-0 first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300 hover:bg-gray-300 break-words transition-all cursor-pointer p-3 pl-4;
+    @apply relative text-lg odd:bg-gray-200 hover:bg-gray-300 decoration-gray-800 decoration-2 border-x-[3px] first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300 break-words transition-all cursor-pointer p-3 pl-4;
   }
 
   .done {
-    @apply line-through;
+    @apply bg-red-400/20 odd:bg-red-500/20 hover:bg-red-500/30 border-red-500/30;
+  }
+
+  .done1 {
+    @apply bg-yellow-400/20 odd:bg-yellow-500/20 hover:bg-yellow-500/30 border-yellow-500/30;
+  }
+
+  .done2 {
+    @apply bg-emerald-400/20 odd:bg-emerald-500/20 hover:bg-emerald-500/30 border-emerald-500/30;
+  }
+
+  .done3 {
+    @apply bg-sky-400/20 odd:bg-sky-500/20 hover:bg-sky-500/30 border-sky-500/30;
+  }
+
+  .done4 {
+    @apply bg-indigo-400/20 odd:bg-indigo-500/20 hover:bg-indigo-500/30 border-indigo-500/30;
   }
 
   .attrDiv {
@@ -16,7 +32,7 @@
   }
 
   .attr {
-    @apply inline-flex text-[0.94rem] leading-[1.65rem] text-gray-600 hover:line-through decoration-gray-700 decoration-2 mr-3 px-2 rounded-md bg-gray-400/20 mt-1;
+    @apply inline-flex text-[0.94rem] leading-[1.65rem] text-gray-600 hover:line-through decoration-gray-700 decoration-2 mr-3 px-2 rounded-md bg-gray-600/10 mt-1;
   }
 
   .goto {
@@ -24,19 +40,19 @@
   }
 
   .gotospan {
-    @apply hover:decoration-0 decoration-transparent ml-3 mr-0 p-0;
+    @apply bg-transparent hover:decoration-0 decoration-transparent ml-3 mr-0 p-0;
   }
 
   .opt {
-    @apply block absolute top-[0.775rem] right-4 text-right text-gray-500/60;
+    @apply block absolute top-[0.775rem] right-4 text-right text-gray-700/50;
   }
 
   .optBtn {
-    @apply text-base md:text-lg hover:text-gray-500 active:text-gray-600 transition-all ml-2 md:ml-3;
+    @apply text-base md:text-lg hover:text-gray-700/50 active:text-gray-800/50 transition-all ml-2 md:ml-3;
   }
 
   .price {
-    @apply text-sm bg-gray-500 text-white rounded-md px-1.5 ml-3 p-0;
+    @apply text-sm bg-gray-900/50 text-white rounded-md px-1.5 ml-3 p-0;
   }
 
   .link {

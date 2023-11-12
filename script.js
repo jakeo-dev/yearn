@@ -54,9 +54,11 @@ function updateFP() {
 
     if (fullPrice == '$0.00') {
         document.getElementById('listPrice').classList.add('hidden');
+        document.getElementById('shareListBtn').classList.remove('ml-auto');
     } else {
-        document.getElementById('listPrice').classList.remove('hidden');
         document.getElementById('listPrice').innerText = fullPrice + ' total';
+        document.getElementById('listPrice').classList.remove('hidden');
+        document.getElementById('shareListBtn').classList.add('ml-auto');
     }
 }
 
@@ -259,11 +261,44 @@ document.querySelector('ul').addEventListener('click', function (event) {
         event.target.remove();
 
     } else if (event.target.classList.contains('attrDiv')) {
-        event.target.parentElement.classList.toggle('done');
+        el = event.target.parentElement;
+        if (el.className.includes('done4')) {
+            el.classList.remove('done4');
+        } else if (el.className.includes('done3')) {
+            el.classList.remove('done3');
+            el.classList.add('done4');
+        } else if (el.className.includes('done2')) {
+            el.classList.remove('done2');
+            el.classList.add('done3');
+        } else if (el.className.includes('done1')) {
+            el.classList.remove('done1');
+            el.classList.add('done2');
+        } else if (el.className.includes('done')) {
+            el.classList.remove('done');
+            el.classList.add('done1');
+        } else {
+            el.classList.add('done');
+        }
 
     } else if (event.target.classList.contains('item')) {
         el = event.target;
-        event.target.classList.toggle('done');
+        if (el.className.includes('done4')) {
+            el.classList.remove('done4');
+        } else if (el.className.includes('done3')) {
+            el.classList.remove('done3');
+            el.classList.add('done4');
+        } else if (el.className.includes('done2')) {
+            el.classList.remove('done2');
+            el.classList.add('done3');
+        } else if (el.className.includes('done1')) {
+            el.classList.remove('done1');
+            el.classList.add('done2');
+        } else if (el.className.includes('done')) {
+            el.classList.remove('done');
+            el.classList.add('done1');
+        } else {
+            el.classList.add('done');
+        }
     }
 
     saveList();
