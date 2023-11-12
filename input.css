@@ -16,7 +16,7 @@
   }
 
   .attr {
-    @apply inline-flex text-base text-gray-600 hover:line-through decoration-gray-700 decoration-2 mr-3;
+    @apply inline-flex text-[0.94rem] leading-[1.65rem] text-gray-600 hover:line-through decoration-gray-700 decoration-2 mr-3 px-2 rounded-md bg-gray-400/20 mt-1;
   }
 
   .goto {
@@ -24,7 +24,7 @@
   }
 
   .gotospan {
-    @apply hover:decoration-0 decoration-transparent ml-3 mr-0;
+    @apply hover:decoration-0 decoration-transparent ml-3 mr-0 p-0;
   }
 
   .opt {
@@ -36,7 +36,7 @@
   }
 
   .price {
-    @apply text-sm bg-green-700 text-gray-100 rounded-md px-1.5 ml-3;
+    @apply text-sm bg-gray-500 text-white rounded-md px-1.5 ml-3 p-0;
   }
 
   .link {
@@ -56,7 +56,7 @@
   }
 
   .trash {
-    @apply visible;
+    @apply visible hover:text-red-500 active:text-red-600 transition-all;
   }
 
   .fadeIn {

@@ -40,7 +40,7 @@ function updateFP() {
         document.getElementById('listPrice').classList.add('hidden');
     } else {
         document.getElementById('listPrice').classList.remove('hidden');
-        document.getElementById('listPrice').innerText = 'List Price: ' + fullPrice;
+        document.getElementById('listPrice').innerText = fullPrice + ' total';
     }
 }
 
