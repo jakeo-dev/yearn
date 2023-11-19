@@ -26,14 +26,6 @@ if (yearnItems.length < 1) {
 
 function saveList() { // call when anything in list is updated
     localStorage.setItem('yearnList', document.getElementById('list').innerHTML);
-
-    if (yearnItems.length < 1) {
-        document.getElementById('listOpts').classList.add('hidden');
-        document.getElementById('listOpts').classList.remove('flex');
-    } else {
-        document.getElementById('listOpts').classList.remove('hidden');
-        document.getElementById('listOpts').classList.add('flex');
-    }
 }
 
 function updateFP() {
@@ -70,8 +62,9 @@ function add() {
     } else {
         let el = document.createElement('li');
         el.tabIndex = 0;
+        el.draggable = true;
 
-        el.id = Math.floor(100000000 + Math.random() * 900000000);
+        el.id = Math.floor((Math.random() * 900000000) + 100000000);
 
         el.name = input;
         localStorage.setItem(el.id + 'Name', el.name);
@@ -163,6 +156,13 @@ function add() {
 
         el.appendChild(div);
 
+        el.addEventListener('dragstart', handleDragStart, false);
+        el.addEventListener('dragenter', handleDragEnter, false);
+        el.addEventListener('dragover', handleDragOver, false);
+        el.addEventListener('dragleave', handleDragLeave, false);
+        el.addEventListener('drop', handleDrop, false);
+        el.addEventListener('dragend', handleDragEnd, false);
+
         saveList();
 
         let link = document.getElementsByClassName('link');
@@ -198,6 +198,15 @@ function add() {
             trash[i].onclick = function () {
                 clickTrash(this.parentElement.parentElement);
             }
+        }
+
+        yearnItems = document.getElementsByTagName('li');
+        if (yearnItems.length < 1) {
+            document.getElementById('listOpts').classList.add('hidden');
+            document.getElementById('listOpts').classList.remove('flex');
+        } else {
+            document.getElementById('listOpts').classList.remove('hidden');
+            document.getElementById('listOpts').classList.add('flex');
         }
     }
 }
@@ -314,6 +323,15 @@ document.body.onkeyup = function (event) {
 function clickTrash(el) {
     if (confirm('Are you sure you want to remove \"' + el.name + '\"?')) {
         el.remove();
+
+        yearnItems = document.getElementsByTagName('li');
+        if (yearnItems.length < 1) {
+            document.getElementById('listOpts').classList.add('hidden');
+            document.getElementById('listOpts').classList.remove('flex');
+        } else {
+            document.getElementById('listOpts').classList.remove('hidden');
+            document.getElementById('listOpts').classList.add('flex');
+        }
     }
 
     saveList();
@@ -328,7 +346,7 @@ function clickPen(el) {
     } else {
         el.name = localStorage.getItem(el.id + 'Name');
 
-        console.log(el);
+        //console.log(el);
         //console.log(el.name);
 
         el.innerHTML = el.innerHTML.replace(el.name, entered);
@@ -394,7 +412,6 @@ function clickTag(el) {
         saveList();
     }
 }
-
 
 function clickPrice(el) {
     entered = prompt('Enter the price of your gift');
@@ -475,103 +492,124 @@ function validURL(string) {
     return urlPattern.test(string);
 }
 
-/* document.addEventListener('DOMContentLoaded', (event) => {
+/* *** drag and drop items *** */
+let sourceEl = null;
+let srcClasses;
+let srcHtml;
 
-    var dragSrcEl = null;
+function handleDragStart(e) {
+    sourceEl = e.srcElement;
+    srcHtml = e.srcElement.innerHTML;
+    srcId = e.srcElement.id;
+    srcClasses = e.srcElement.className;
+    srcIndex = getIndex(e.srcElement);
+    sourceEl.classList.add('opacity-50');
+}
 
-    function handleDragStart(e) {
-        this.style.opacity = '0.4';
-
-        dragSrcEl = this;
-
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/html', this.innerHTML);
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
     }
 
-    function handleDragOver(e) {
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
+    e.dataTransfer.dropEffect = 'move';
 
-        e.dataTransfer.dropEffect = 'move';
+    return false;
+}
 
-        return false;
+function handleDragEnter(e) {
+    this.classList.add('over');
+}
+
+function handleDragLeave(e) {
+    this.classList.remove('over');
+}
+
+function handleDrop(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation(); // stops the browser from redirecting
     }
 
-    function handleDragEnter(e) {
-        this.classList.add('over');
-    }
+    sourceEl.classList.remove('opacity-50');
 
-    function handleDragLeave(e) {
-        this.classList.remove('over');
-    }
+    currentEl = this;
 
-    function handleDrop(e) {
-        if (e.stopPropagation) {
-            e.stopPropagation(); // stops the browser from redirecting.
-        }
+    if (sourceEl != currentEl) {
+        let newEl = document.createElement('li');
+        newEl.innerHTML = sourceEl.innerHTML;
+        newEl.id = sourceEl.id
+        newEl.className = sourceEl.className;
+        newEl.tabIndex = 0;
+        newEl.draggable = true;
 
-        if (dragSrcEl != this) {
-            dragSrcEl.innerHTML = this.innerHTML;
-            this.innerHTML = e.dataTransfer.getData('text/html');
+        currentEl.parentNode.insertBefore(newEl, currentEl.nextSibling);
+        sourceEl.remove();
 
-            let link = document.getElementsByClassName('link');
-            for (i = 0; i < link.length; i++) {
-                link[i].onclick = function () {
-                    clickLink(this.parentElement.parentElement);
-                }
-            }
+        newEl.addEventListener('dragstart', handleDragStart, false);
+        newEl.addEventListener('dragenter', handleDragEnter, false);
+        newEl.addEventListener('dragover', handleDragOver, false);
+        newEl.addEventListener('dragleave', handleDragLeave, false);
+        newEl.addEventListener('drop', handleDrop, false);
+        newEl.addEventListener('dragend', handleDragEnd, false);
 
-            let price = document.getElementsByClassName('dollar-sign');
-            for (i = 0; i < price.length; i++) {
-                price[i].onclick = function () {
-                    clickPrice(this.parentElement.parentElement);
-                }
-            }
-
-            let tag = document.getElementsByClassName('tag');
-            for (i = 0; i < tag.length; i++) {
-                tag[i].onclick = function () {
-                    clickTag(this.parentElement.parentElement);
-                }
-            }
-
-            let pen = document.getElementsByClassName('pen');
-            for (i = 0; i < pen.length; i++) {
-                pen[i].onclick = function () {
-                    clickPen(this.parentElement.parentElement);
-                }
-            }
-
-            let trash = document.getElementsByClassName('trash');
-            for (i = 0; i < trash.length; i++) {
-                trash[i].onclick = function () {
-                    clickTrash(this.parentElement.parentElement);
-                }
+        let link = document.getElementsByClassName('link');
+        for (i = 0; i < link.length; i++) {
+            link[i].onclick = function () {
+                clickLink(this.parentElement.parentElement);
             }
         }
 
-        return false;
+        let price = document.getElementsByClassName('dollar-sign');
+        for (i = 0; i < price.length; i++) {
+            price[i].onclick = function () {
+                clickPrice(this.parentElement.parentElement);
+            }
+        }
+
+        let tag = document.getElementsByClassName('tag');
+        for (i = 0; i < tag.length; i++) {
+            tag[i].onclick = function () {
+                clickTag(this.parentElement.parentElement);
+            }
+        }
+
+        let pen = document.getElementsByClassName('pen');
+        for (i = 0; i < pen.length; i++) {
+            pen[i].onclick = function () {
+                clickPen(this.parentElement.parentElement);
+            }
+        }
+
+        let trash = document.getElementsByClassName('trash');
+        for (i = 0; i < trash.length; i++) {
+            trash[i].onclick = function () {
+                clickTrash(this.parentElement.parentElement);
+            }
+        }
     }
 
-    function handleDragEnd(e) {
-        this.style.opacity = '1';
+    saveList();
 
-        things.forEach(function (thing) {
-            thing.classList.remove('over');
-        });
-    }
+    return false;
+}
 
-    let things = document.querySelectorAll('.item');
-    things.forEach(function (thing) {
-        thing.addEventListener('dragstart', handleDragStart, false);
-        thing.addEventListener('dragenter', handleDragEnter, false);
-        thing.addEventListener('dragover', handleDragOver, false);
-        thing.addEventListener('dragleave', handleDragLeave, false);
-        thing.addEventListener('drop', handleDrop, false);
-        thing.addEventListener('dragend', handleDragEnd, false);
+function handleDragEnd(e) {
+    let allItems = document.querySelectorAll('.item');
+    allItems.forEach(function (thing) {
+        thing.classList.remove('over');
     });
-}); */
+
+    saveList();
+}
+
+let allItems = document.querySelectorAll('.item');
+allItems.forEach(function (el) {
+    el.addEventListener('dragstart', handleDragStart, false);
+    el.addEventListener('dragenter', handleDragEnter, false);
+    el.addEventListener('dragover', handleDragOver, false);
+    el.addEventListener('dragleave', handleDragLeave, false);
+    el.addEventListener('drop', handleDrop, false);
+    el.addEventListener('dragend', handleDragEnd, false);
+});
 
 let text = '';
 
@@ -673,10 +711,19 @@ function updateAllItems() {
             el.id = el.c;
         }
 
-        /* if (el.draggable == true) {
-            el.draggable = false;
-        } */
+        if (el.draggable == false) {
+            el.draggable = true;
+        }
     }
+}
+
+function getIndex(el) {
+    var i = 0;
+    while (el.previousElementSibling) {
+        el = el.previousElementSibling;
+        i++;
+    }
+    return i;
 }
 
 window.onclick = function (event) {

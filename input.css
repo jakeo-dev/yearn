@@ -4,7 +4,11 @@
 
 @layer components {
   .item {
-    @apply relative text-lg odd:bg-gray-200 hover:bg-gray-300 decoration-gray-800 decoration-2 border-x-[3px] first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300 break-words transition-all cursor-pointer p-3 pl-4;
+    @apply relative md:text-lg odd:bg-gray-200/70 hover:bg-gray-300/60 decoration-gray-800 decoration-2 border-x-4 first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300/60 break-words transition-all cursor-pointer p-3 pl-4;
+  }
+
+  .over {
+    @apply !border-b-[12px];
   }
 
   .done {
@@ -28,7 +32,7 @@
   }
 
   .attrDiv {
-    @apply block;
+    @apply flex max-w-fit;
   }
 
   .attr {
@@ -44,7 +48,7 @@
   }
 
   .opt {
-    @apply block absolute top-[0.775rem] right-4 text-right text-gray-700/50;
+    @apply block absolute top-[0.775rem] right-4 text-right text-gray-700/50 rounded-md;
   }
 
   .optBtn {
@@ -85,7 +89,7 @@
 }
 
 .item:hover > .opt {
-  @apply text-gray-900 transition-all;
+  @apply text-gray-900 bg-gray-600/10 pr-2 md:pr-3 transition-all;
 }
 
 .item:hover .link {
