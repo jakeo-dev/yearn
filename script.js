@@ -522,6 +522,7 @@ function handleDragEnter(e) {
 
 function handleDragLeave(e) {
     this.classList.remove('over');
+    sourceEl.classList.remove('opacity-50');
 }
 
 function handleDrop(e) {
