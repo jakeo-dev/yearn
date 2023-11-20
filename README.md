@@ -8,4 +8,4 @@
 
 ### Group your gifts with different colors and reorder them
 
-<img width="1151" alt="Captura de pantalla 2023-11-20 a la(s) 12 05 49 p m" src="https://github.com/jakeo-dev/yearn/assets/56329025/576e3cd4-acac-48b6-8048-0b7b25e9b542">
+<img width="1151" alt="Captura de pantalla 2023-11-20 a la(s) 12 06 54 p m" src="https://github.com/jakeo-dev/yearn/assets/56329025/85b8d439-74fd-4777-a30b-bb62d99bab39">
