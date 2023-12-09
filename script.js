@@ -321,8 +321,8 @@ document.body.onkeyup = function (event) {
 }
 
 function clickTrash(el) {
-    console.log(el)
-    console.log(el.getElementById('text'));
+    //console.log(el)
+    //console.log(el.getElementById('text'));
     if (confirm('Are you sure you want to remove this gift?')) {
         el.remove();
 
