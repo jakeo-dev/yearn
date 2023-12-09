@@ -321,7 +321,9 @@ document.body.onkeyup = function (event) {
 }
 
 function clickTrash(el) {
-    if (confirm('Are you sure you want to remove \"' + el.name + '\"?')) {
+    console.log(el)
+    console.log(el.getElementById('text'));
+    if (confirm('Are you sure you want to remove this gift?')) {
         el.remove();
 
         yearnItems = document.getElementsByTagName('li');
