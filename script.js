@@ -615,17 +615,49 @@ allItems.forEach(function (el) {
 });
 
 let text = '';
+let specificYearnItems = yearnItems;
+let minMaxAmt = 0;
 
-function share() {
-    if (yearnItems.length < 1) {
-        document.getElementById('shareList').innerText = 'Add items to share your list';
-        document.getElementById('copyB').classList.add('invisible');
-        text = '';
+function share(shareSelection, minMaxAmt) {
+    text = '';
+
+    if (shareSelection == 'red') {
+        specificYearnItems = document.getElementsByClassName('done');
+    } else if (shareSelection == 'yellow') {
+        specificYearnItems = document.getElementsByClassName('done1');
+    } else if (shareSelection == 'green') {
+        specificYearnItems = document.getElementsByClassName('done2');
+    } else if (shareSelection == 'blue') {
+        specificYearnItems = document.getElementsByClassName('done3');
+    } else if (shareSelection == 'purple') {
+        specificYearnItems = document.getElementsByClassName('done4');
+    } else if (shareSelection == 'over') {
+        specificYearnItems = [];
+        for (let y = 0; y < yearnItems.length; y++) {
+            if (yearnItems[y].price.replace('$', '') >= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+        }
+    } else if (shareSelection == 'under') {
+        specificYearnItems = [];
+        for (let y = 0; y < yearnItems.length; y++) {
+            if (yearnItems[y].price.replace('$', '') <= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+        }
+    } else if (shareSelection == 'links') {
+        specificYearnItems = [];
+        for (let y = 0; y < yearnItems.length; y++) {
+            if (localStorage.getItem(yearnItems[y].id + 'Link') != '') specificYearnItems.push(yearnItems[y]);
+        }
     } else {
-        document.getElementById('copyB').classList.remove('invisible');
+        specificYearnItems = yearnItems;
+    }
 
-        for (let i = 0; i < yearnItems.length; i++) {
-            el = yearnItems[i];
+    if (specificYearnItems.length < 1) {
+        document.getElementById('shareList').innerText = 'You don\'t have any gifts to share';
+        document.getElementById('copyB').classList.add('hidden');
+    } else {
+        document.getElementById('copyB').classList.remove('hidden');
+
+        for (let i = 0; i < specificYearnItems.length; i++) {
+            el = specificYearnItems[i];
 
             localStorage.getItem(el.innerHTML + 'C');
             el.shareName = localStorage.getItem(el.id + 'Name');
@@ -661,7 +693,7 @@ function share() {
 
             text = `${text}• ${el.shareName}${el.sharePrice}${el.shareAttrs}${el.shareLink}\n`
 
-            if (i < yearnItems.length - 1) {
+            if (i < specificYearnItems.length - 1) {
                 text = text + '\n';
             }
         }
@@ -675,6 +707,22 @@ function share() {
     document.getElementById('shareModal').classList.add('fadeOut');
 
     document.getElementsByTagName('body')[0].classList.add('overflow-hidden');
+}
+
+document.getElementById('selectWhichShare').onchange = function () {
+    shareSelection = document.getElementById('selectWhichShare').value;
+    if (shareSelection == 'over' || shareSelection == 'under') {
+        document.getElementById('minMaxDollar').classList.remove('hidden');
+    } else {
+        document.getElementById('minMaxDollar').classList.add('hidden');
+        document.getElementById('minMaxDollar').value = 0;
+    }
+    share(shareSelection, document.getElementById('minMaxDollar').value);
+}
+
+document.getElementById('minMaxDollar').oninput = function () {
+    shareSelection = document.getElementById('selectWhichShare').value;
+    share(shareSelection, document.getElementById('minMaxDollar').value);
 }
 
 function copy() {
