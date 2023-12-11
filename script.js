@@ -634,12 +634,12 @@ function share(shareSelection, minMaxAmt) {
     } else if (shareSelection == 'over') {
         specificYearnItems = [];
         for (let y = 0; y < yearnItems.length; y++) {
-            if (yearnItems[y].price.replace('$', '') >= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+            if (yearnItems[y].price.replace('$', '').replace(',', '') >= minMaxAmt) specificYearnItems.push(yearnItems[y]);
         }
     } else if (shareSelection == 'under') {
         specificYearnItems = [];
         for (let y = 0; y < yearnItems.length; y++) {
-            if (yearnItems[y].price.replace('$', '') <= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+            if (yearnItems[y].price.replace('$', '').replace(',', '') <= minMaxAmt) specificYearnItems.push(yearnItems[y]);
         }
     } else if (shareSelection == 'links') {
         specificYearnItems = [];

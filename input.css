@@ -4,7 +4,7 @@
 
 @layer components {
   .item {
-    @apply relative md:text-lg odd:bg-gray-200/70 hover:bg-gray-300/60 decoration-gray-800 decoration-2 border-x-4 first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300/60 break-words transition-all cursor-pointer p-3 pl-4;
+    @apply md:relative md:text-lg odd:bg-gray-200/70 hover:bg-gray-300/60 decoration-gray-800 decoration-2 border-x-4 first:border-t-2 last:border-b-2 first:rounded-t-md last:rounded-b-md border-gray-300/60 break-words transition-all cursor-pointer p-3 pl-4;
   }
 
   .over {
@@ -48,11 +48,11 @@
   }
 
   .opt {
-    @apply block absolute top-[0.775rem] right-4 text-right text-gray-700/50 rounded-md;
+    @apply block md:absolute top-[0.775rem] right-4 text-right text-gray-700/50 rounded-md pt-1 md:p-0;
   }
 
   .optBtn {
-    @apply text-base md:text-lg hover:text-gray-700/50 active:text-gray-800/50 transition-all ml-2 md:ml-3;
+    @apply bg-gray-600/10 md:bg-transparent rounded-full text-base md:text-lg hover:text-gray-700/50 active:text-gray-800/50 transition-all px-2 py-0.5 md:p-0 ml-1 md:ml-3;
   }
 
   .price {
@@ -60,23 +60,23 @@
   }
 
   .link {
-    @apply invisible;
+    @apply md:invisible;
   }
 
   .dollar-sign {
-    @apply invisible;
+    @apply md:invisible;
   }
 
   .tag {
-    @apply invisible;
+    @apply md:invisible;
   }
 
   .pen {
-    @apply visible;
+    @apply md:visible;
   }
 
   .trash {
-    @apply visible hover:text-red-500 active:text-red-600 transition-all;
+    @apply md:visible hover:text-red-500 active:text-red-600 transition-all;
   }
 
   .fadeIn {
@@ -89,7 +89,7 @@
 }
 
 .item:hover > .opt {
-  @apply text-gray-900 bg-gray-600/10 pr-2 md:pr-3 transition-all;
+  @apply text-gray-900 md:bg-gray-600/10 md:pr-3 transition-all;
 }
 
 .item:hover .link {
