@@ -634,12 +634,12 @@ function share(shareSelection, minMaxAmt) {
     } else if (shareSelection == 'over') {
         specificYearnItems = [];
         for (let y = 0; y < yearnItems.length; y++) {
-            if (yearnItems[y].price.replace('$', '').replace(',', '') >= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+            if (Number(yearnItems[y].price.replace('$', '').replace(',', '')) >= minMaxAmt) specificYearnItems.push(yearnItems[y]);
         }
     } else if (shareSelection == 'under') {
         specificYearnItems = [];
         for (let y = 0; y < yearnItems.length; y++) {
-            if (yearnItems[y].price.replace('$', '').replace(',', '') <= minMaxAmt) specificYearnItems.push(yearnItems[y]);
+            if (Number(yearnItems[y].price.replace('$', '').replace(',', '')) <= minMaxAmt) specificYearnItems.push(yearnItems[y]);
         }
     } else if (shareSelection == 'links') {
         specificYearnItems = [];
@@ -717,12 +717,12 @@ document.getElementById('selectWhichShare').onchange = function () {
         document.getElementById('minMaxDollar').classList.add('hidden');
         document.getElementById('minMaxDollar').value = 0;
     }
-    share(shareSelection, document.getElementById('minMaxDollar').value);
+    share(shareSelection, Number(document.getElementById('minMaxDollar').value));
 }
 
 document.getElementById('minMaxDollar').oninput = function () {
     shareSelection = document.getElementById('selectWhichShare').value;
-    share(shareSelection, document.getElementById('minMaxDollar').value);
+    share(shareSelection, Number(document.getElementById('minMaxDollar').value));
 }
 
 function copy() {
