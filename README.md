@@ -1,5 +1,4 @@
 # Yearn
-## Organize gifts that you yearn for into a simple list
 
 
 ### Attach links, prices, and other attributes to your gifts
